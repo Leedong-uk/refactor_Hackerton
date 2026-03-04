@@ -19,11 +19,11 @@ public class Business extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "business_code_id")
+    @JoinColumn(name = "business_code_id",nullable = false)
     private BusinessCode businessCode;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member_id",nullable = false, unique = true)
     private Member member;
 
     private String name;

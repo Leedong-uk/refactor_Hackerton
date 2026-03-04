@@ -1,7 +1,6 @@
-package hackerton.refactor.entity.member;
+package hackerton.refactor.entity.announce;
 
 import hackerton.refactor.entity.base.BaseEntity;
-import hackerton.refactor.entity.base.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -11,17 +10,18 @@ import lombok.Setter;
 @Entity
 @Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Auth extends BaseTimeEntity {
-
+public class Document extends BaseEntity {
     @Id
     @GeneratedValue
-    @Column(name = "auth_id")
+    @Column(name = "document_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id",nullable = false)
-    private Member member;
+    @JoinColumn(name = "announce_id",nullable = false)
+    private Announce announce;
+    private String title;
+    @Lob
+    private String description;
 
-    @Enumerated(EnumType.STRING)
-    private AuthStatus auth;
+
 }

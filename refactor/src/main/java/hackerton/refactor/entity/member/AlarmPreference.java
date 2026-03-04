@@ -17,15 +17,19 @@ public class AlarmPreference {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member_id",nullable = false)
     private Member member;
+
     @Column(nullable = false)
-    private Boolean sosPreference = false;
+    private boolean sosPreference = false;
+
     @Column(nullable = false)
-    private Boolean announcePreference=false;
+    private boolean announcePreference=false;
+
     private LocalDateTime alarmStartTime;
     private LocalDateTime alarmEndTime;
+
     @Column(nullable = false)
-    private Boolean isAlarm = false;
+    private boolean isAlarm = false;
 
 }
