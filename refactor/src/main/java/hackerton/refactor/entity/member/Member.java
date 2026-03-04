@@ -2,6 +2,7 @@ package hackerton.refactor.entity.member;
 
 import hackerton.refactor.entity.base.BaseEntity;
 import hackerton.refactor.entity.MemberStatus;
+import hackerton.refactor.entity.business.Business;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,7 +23,5 @@ public class Member extends BaseEntity {
     private MemberStatus status;
     private int helpCount;
     private String badge;
-
-
 
 }
