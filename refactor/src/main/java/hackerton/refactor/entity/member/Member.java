@@ -1,12 +1,9 @@
 package hackerton.refactor.entity.member;
 
-import hackerton.refactor.entity.BaseEntity;
+import hackerton.refactor.entity.base.BaseEntity;
 import hackerton.refactor.entity.MemberStatus;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter @Setter

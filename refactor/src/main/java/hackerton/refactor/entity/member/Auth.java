@@ -8,22 +8,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Entity
 @Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ProfileImage extends BaseTimeEntity {
+public class Auth extends BaseTimeEntity {
+
     @Id
     @GeneratedValue
-    @Column(name = "profile_image_id")
+    @Column(name = "auth_id")
     private Long id;
-
-    @Column(nullable = false)
-    private String storageKey = "";
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
-
-
+    @Enumerated(EnumType.STRING)
+    private AuthStatus auth;
 }
