@@ -23,16 +23,9 @@ public class Member extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private MemberStatus status;
-
-    @OneToMany(mappedBy = "member",cascade = CascadeType.ALL,orphanRemoval = true)
-    List<ProfileImage> profiles = new ArrayList<>();
-
     private int helpCount;
     private String badge;
 
-    public void addProfile(ProfileImage profile) {
-        profiles.add(profile);
-        profile.setMember(this);
-    }
+
 
 }
