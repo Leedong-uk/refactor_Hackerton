@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 
 @Entity
 @Getter @Setter
@@ -33,4 +33,6 @@ public class Festival extends BaseEntity {
     private String telName;
     private double mapX;
     private double mapY;
+
+
 }
