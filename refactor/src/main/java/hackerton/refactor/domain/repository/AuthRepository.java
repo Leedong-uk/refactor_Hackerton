@@ -7,5 +7,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AuthRepository extends JpaRepository<Auth,Long> {
-    Auth findAuthByMember(Member member);
 }

@@ -20,11 +20,9 @@ public class QAuth extends EntityPathBase<Auth> {
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QAuth auth1 = new QAuth("auth1");
+    public static final QAuth auth = new QAuth("auth");
 
     public final hackerton.refactor.domain.entity.base.QBaseTimeEntity _super = new hackerton.refactor.domain.entity.base.QBaseTimeEntity(this);
-
-    public final EnumPath<AuthStatus> auth = createEnum("auth", AuthStatus.class);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
@@ -35,6 +33,8 @@ public class QAuth extends EntityPathBase<Auth> {
     public final DateTimePath<java.time.LocalDateTime> lastModifiedDate = _super.lastModifiedDate;
 
     public final QMember member;
+
+    public final EnumPath<AuthStatus> status = createEnum("status", AuthStatus.class);
 
     public QAuth(String variable) {
         this(Auth.class, forVariable(variable), INITS);

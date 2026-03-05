@@ -29,6 +29,7 @@ public class ProfileImage extends BaseTimeEntity {
         ProfileImage profileImage = new ProfileImage();
         profileImage.setStorageKey(storageKey);
         profileImage.setMember(member);
+        member.getProfileImages().add(profileImage);
         return profileImage;
     }
 

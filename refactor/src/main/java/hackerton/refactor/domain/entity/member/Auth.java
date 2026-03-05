@@ -9,7 +9,6 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Auth extends BaseTimeEntity {
 
     @Id
@@ -22,11 +21,14 @@ public class Auth extends BaseTimeEntity {
     private Member member;
 
     @Enumerated(EnumType.STRING)
-    private AuthStatus auth;
+    private AuthStatus status;
 
+    public Auth() {
+    }
 
-    public Auth(Member member, AuthStatus auth) {
+    public void addMember(Member member) {
         this.member = member;
-        this.auth = auth;
+        this.status = AuthStatus.USER;
+        member.getAuths().add(this);
     }
 }

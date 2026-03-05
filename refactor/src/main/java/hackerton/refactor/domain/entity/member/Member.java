@@ -1,10 +1,13 @@
 package hackerton.refactor.domain.entity.member;
 
-import hackerton.refactor.domain.dto.SignUpRequestDto;
+import hackerton.refactor.domain.dto.member.SignUpRequestDto;
 import hackerton.refactor.domain.entity.base.BaseEntity;
 import hackerton.refactor.domain.entity.MemberStatus;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -17,7 +20,7 @@ public class Member extends BaseEntity {
     private String email;
     private String password;
     private String name;
-    private String kakao_id;
+    private String kakaoId;
 
     @Enumerated(EnumType.STRING)
     private MemberStatus status;
@@ -27,6 +30,13 @@ public class Member extends BaseEntity {
     private MemberBadge badge;
     private String fcmToken;
 
+    // ProfileImage, Auth는 회원과 생명주기 동일 → cascade 적용
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProfileImage> profileImages = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Auth> auths = new ArrayList<>();
+
 
 
     // 편의 메서드 //
@@ -35,7 +45,7 @@ public class Member extends BaseEntity {
         member.email = dto.getEmail();
         member.password = dto.getPassword();
         member.name = dto.getName();
-        member.kakao_id = dto.getKakaoId();
+        member.kakaoId = dto.getKakaoId();
         member.status = MemberStatus.ACTIVE;
         member.helpCount = 0;
         member.badge = MemberBadge.도움일꾼;

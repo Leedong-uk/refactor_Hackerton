@@ -1,4 +1,4 @@
-package hackerton.refactor.domain.dto;
+package hackerton.refactor.domain.dto.member;
 
 import lombok.Data;
 
