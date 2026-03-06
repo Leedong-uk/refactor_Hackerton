@@ -33,4 +33,5 @@ public class ProfileImage extends BaseTimeEntity {
         return profileImage;
     }
 
+
 }

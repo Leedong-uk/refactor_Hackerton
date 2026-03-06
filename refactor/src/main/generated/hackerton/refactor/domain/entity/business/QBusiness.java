@@ -24,9 +24,15 @@ public class QBusiness extends EntityPathBase<Business> {
 
     public final hackerton.refactor.domain.entity.base.QBaseEntity _super = new hackerton.refactor.domain.entity.base.QBaseEntity(this);
 
-    public final hackerton.refactor.domain.entity.QAddress address;
+    public final StringPath businessAddr = createString("businessAddr");
+
+    public final StringPath businessAddrDetail = createString("businessAddrDetail");
 
     public final QBusinessCode businessCode;
+
+    public final StringPath businessNumber = createString("businessNumber");
+
+    public final DatePath<java.time.LocalDate> businessOpenDate = createDate("businessOpenDate", java.time.LocalDate.class);
 
     //inherited
     public final StringPath createdBy = _super.createdBy;
@@ -64,9 +70,8 @@ public class QBusiness extends EntityPathBase<Business> {
 
     public QBusiness(Class<? extends Business> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.address = inits.isInitialized("address") ? new hackerton.refactor.domain.entity.QAddress(forProperty("address")) : null;
         this.businessCode = inits.isInitialized("businessCode") ? new QBusinessCode(forProperty("businessCode")) : null;
-        this.member = inits.isInitialized("member") ? new hackerton.refactor.domain.entity.member.QMember(forProperty("member")) : null;
+        this.member = inits.isInitialized("member") ? new hackerton.refactor.domain.entity.member.QMember(forProperty("member"), inits.get("member")) : null;
     }
 
 }

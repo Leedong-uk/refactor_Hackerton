@@ -1,4 +1,4 @@
-package hackerton.refactor.web.controller;
+package hackerton.refactor.web.controller.member;
 
 import hackerton.refactor.domain.dto.member.ChangePasswordRequest;
 import hackerton.refactor.domain.service.MemberService;
@@ -16,7 +16,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @PatchMapping("/password")
-    @ApiSuccess(message = "password.change.success")
+    @ApiSuccess(message = "user.password.change")
     public void changePassword(@RequestBody ChangePasswordRequest request) {
         memberService.updatePassword(request.getId(), request.getNewPassword());
     }

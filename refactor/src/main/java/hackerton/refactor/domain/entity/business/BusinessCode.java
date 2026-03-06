@@ -9,7 +9,6 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BusinessCode extends BaseTimeEntity {
     @Id
     @GeneratedValue
@@ -21,4 +20,16 @@ public class BusinessCode extends BaseTimeEntity {
     private String middleName;
     private String minorCode;
     private String minorName;
+
+    public BusinessCode( String majorCode, String majorName, String middleCode, String middleName, String minorCode, String minorName) {
+        this.majorCode = majorCode;
+        this.majorName = majorName;
+        this.middleCode = middleCode;
+        this.middleName = middleName;
+        this.minorCode = minorCode;
+        this.minorName = minorName;
+    }
+
+    public BusinessCode() {
+    }
 }

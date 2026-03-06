@@ -3,6 +3,7 @@ package hackerton.refactor.domain.entity.member;
 import hackerton.refactor.domain.dto.member.SignUpRequestDto;
 import hackerton.refactor.domain.entity.base.BaseEntity;
 import hackerton.refactor.domain.entity.MemberStatus;
+import hackerton.refactor.domain.entity.business.Business;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,16 +27,21 @@ public class Member extends BaseEntity {
     private MemberStatus status;
 
     private int helpCount;
+
     @Enumerated(EnumType.STRING)
     private MemberBadge badge;
+
     private String fcmToken;
 
-    // ProfileImage, Auth는 회원과 생명주기 동일 → cascade 적용
+
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProfileImage> profileImages = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Auth> auths = new ArrayList<>();
+
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Business business;
 
 
 
