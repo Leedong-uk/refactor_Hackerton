@@ -1,7 +1,8 @@
 package hackerton.refactor.general.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hackerton.refactor.general.security.exception.LoginFailureException;
+import hackerton.refactor.general.enums.BadStatusCode;
+import hackerton.refactor.general.exception.ServerErrorException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
 
@@ -15,7 +16,7 @@ public class LoginRequest {
         try {
             return objectMapper.readValue(request.getInputStream(), LoginRequest.class);
         } catch (Exception e) {
-            throw new LoginFailureException("Dto 변환에 실패해 로그인에 실패했습니다");
+            throw new ServerErrorException(BadStatusCode.FAIL_TO_CONVERT_DTO);
         }
     }
 

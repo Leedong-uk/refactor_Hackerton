@@ -3,12 +3,11 @@ package hackerton.refactor.web.controller.member;
 import hackerton.refactor.domain.dto.member.SignUpRequestDto;
 import hackerton.refactor.domain.service.MemberService;
 import hackerton.refactor.general.response.ApiSuccess;
+import hackerton.refactor.general.security.userdetail.CustomUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -22,4 +21,26 @@ public class AuthController {
         memberService.signUp(dto);
 
     }
+
+    /**
+     *  회원 탈퇴
+     */
+    @DeleteMapping("/member-info")
+    @ApiSuccess(statusCode = HttpStatus.NO_CONTENT , message = "user.signout")
+    public void signOutMember(@AuthenticationPrincipal CustomUser user ) {
+        memberService.signOut(user.getMemberId());
+    }
+
+
+    /**
+     * 회원 정보 수정 -> 더티 체킹
+     */
+
+    /**
+     * 회원 정보
+     */
+
+    /**
+     * 이메일 인증
+     */
 }

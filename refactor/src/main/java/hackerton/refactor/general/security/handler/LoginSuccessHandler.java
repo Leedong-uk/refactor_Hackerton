@@ -7,6 +7,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 @Component
@@ -22,10 +24,11 @@ import java.util.Map;
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     private final JwtService jwtService;
     private final ObjectMapper objectMapper;
+    private final MessageSource messageSource;
 
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException{
         UserDetails user =(UserDetails)authentication.getPrincipal();
 
         String accessToken = jwtService.createAccessToken(user.getUsername());
@@ -35,7 +38,9 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         data.put("accessToken", accessToken);
         data.put("refreshToken", refreshToken);
 
-        ApiResponse<Map<String, String>> result = ApiResponse.success(HttpStatus.OK.value(), "로그인에 성공 했습니다", data);
+
+
+        ApiResponse<Map<String, String>> result = ApiResponse.success(HttpStatus.OK.value(), messageSource.getMessage("user.login", null, Locale.getDefault()), data);
 
         response.setContentType("application/json");
         response.setStatus(HttpServletResponse.SC_OK);

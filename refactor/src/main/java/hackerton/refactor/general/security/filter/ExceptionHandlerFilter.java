@@ -2,6 +2,8 @@ package hackerton.refactor.general.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hackerton.refactor.general.enums.BadStatusCode;
+import hackerton.refactor.general.exception.CustomException;
+import hackerton.refactor.general.exception.UnAuthorizedException;
 import hackerton.refactor.general.response.ApiResponse;
 import hackerton.refactor.general.util.StatusCodeHelper;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -32,17 +34,31 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
 
         } catch (ExpiredJwtException e) {
+            log.info("🚨 error 발생: ",e);
+            log.info("🔎 stackTrace : {}",e.getStackTrace());
             writeErrorResponse(response, BadStatusCode.TOKEN_EXPIRED_EXCEPTION);
 
         } catch (io.jsonwebtoken.security.SignatureException | SecurityException e) {
+            log.info("🚨 error 발생: ",e);
+            log.info("🔎 stackTrace : {}",e.getStackTrace());
             writeErrorResponse(response, BadStatusCode.INVALID_TOKEN_SIGNATURE);
 
         } catch (UnsupportedJwtException | MalformedJwtException | IllegalArgumentException e) {
+            log.info("🚨 error 발생: ",e);
+            log.info("🔎 stackTrace : {}",e.getStackTrace());
             writeErrorResponse(response, BadStatusCode.TOKEN_NOT_SUPPORT_EXCEPTION);
 
-        } catch (ServletException e) {
+        }catch (CustomException e){
+            log.info("🚨 error 발생: ",e);
+            log.info("🔎 stackTrace : {}",e.getStackTrace());
+            writeErrorResponse(response,e.getBadStatusCode());
+        }catch (ServletException e) {
+            log.info("🚨 error 발생: ",e);
+            log.info("🔎 stackTrace : {}",e.getStackTrace());
             writeErrorResponse(response, BadStatusCode.INTERNAL_SERVER_EXCEPTION);
         } catch (Exception e) {
+            log.info("🚨 error 발생: ",e);
+            log.info("🔎 stackTrace : {}",e.getStackTrace());
             writeErrorResponse(response, BadStatusCode.INTERNAL_SERVER_EXCEPTION);
         }
     }

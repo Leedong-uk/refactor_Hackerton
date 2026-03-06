@@ -16,7 +16,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<ApiResponse> handleCustomException(CustomException e) {
         StatusCodeHelper statusCodeHelper = StatusCodeHelper.of(e.getBadStatusCode());
-        log.info("🚨 error 발생 ={}",e.getStackTrace());
+        log.info("🚨 error 발생: ",e);
+        log.info("🔎 stackTrace : {}",e.getStackTrace());
         return ResponseEntity
                 .status(statusCodeHelper.getHttpStatus())
                 .body(ApiResponse.fail(statusCodeHelper.getStatusValue(), statusCodeHelper.getMessage()));
@@ -24,7 +25,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse> handleAllException(Exception e) {
-        log.info("🚨 error 발생 ={}",e.getStackTrace());
+        log.info("🚨 error 발생: ",e);
+        log.info("🔎 stackTrace : {}",e.getStackTrace());
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ApiResponse.fail(HttpStatus.INTERNAL_SERVER_ERROR.value(),"서버 내부 오류가 발생 하였습니다 "));

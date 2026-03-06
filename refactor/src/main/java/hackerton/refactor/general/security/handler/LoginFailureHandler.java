@@ -1,6 +1,7 @@
 package hackerton.refactor.general.security.handler;
 
-import hackerton.refactor.general.security.exception.LoginFailureException;
+import hackerton.refactor.general.enums.BadStatusCode;
+import hackerton.refactor.general.exception.UnAuthorizedException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,6 +15,6 @@ import java.io.IOException;
 public class LoginFailureHandler implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        throw new LoginFailureException("로그인에 실패 하였습니다.");
+        throw new UnAuthorizedException(BadStatusCode.LOGIN_FAILURE_EXCEPTION);
     }
 }

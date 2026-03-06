@@ -40,6 +40,7 @@
             USERID_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND,"해당 이메일의 유저가 존재하지 않습니다"),
 
             // 5xx(Server Error)
+            FAIL_TO_CONVERT_DTO(HttpStatus.INTERNAL_SERVER_ERROR,"DTO 변환에 실패 하였습니다"),
             INTERNAL_SERVER_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 오류입니다."),
             DATABASE_PROCESSING_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "DB 처리 중 오류가 발생했습니다."),
             PASSWORD_ENCODING_FAIL_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "비밀번호 암호화 처리 중 오류가 발생했습니다."),
