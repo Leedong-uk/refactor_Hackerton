@@ -43,7 +43,6 @@ public class Member extends BaseEntity {
     public static Member of(SignUpRequestDto dto) {
         Member member = new Member();
         member.email = dto.getEmail();
-        member.password = dto.getPassword();
         member.name = dto.getName();
         member.kakaoId = dto.getKakaoId();
         member.status = MemberStatus.ACTIVE;

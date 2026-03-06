@@ -28,10 +28,10 @@ public class SampleData {
 
         public void init() {
             SignUpRequestDto signUp1 = new SignUpRequestDto("test1@naver.com", "1234", "test1", "kakao1", "profile_storage_key_1");
-            SignUpRequestDto signUp2 = new SignUpRequestDto("test1@naver.com", "1234", "test1", "kakao1", "profile_storage_key_1");
-            SignUpRequestDto signUp3 = new SignUpRequestDto("test1@naver.com", "1234", "test1", "kakao1", "profile_storage_key_1");
-            SignUpRequestDto signUp4 = new SignUpRequestDto("test1@naver.com", "1234", "test1", "kakao1", "profile_storage_key_1");
-            SignUpRequestDto signUp5 = new SignUpRequestDto("test1@naver.com", "1234", "test1", "kakao1", "profile_storage_key_1");
+            SignUpRequestDto signUp2 = new SignUpRequestDto("test2@naver.com", "1234", "test1", "kakao1", "profile_storage_key_1");
+            SignUpRequestDto signUp3 = new SignUpRequestDto("test3@naver.com", "1234", "test1", "kakao1", "profile_storage_key_1");
+            SignUpRequestDto signUp4 = new SignUpRequestDto("test4@naver.com", "1234", "test1", "kakao1", "profile_storage_key_1");
+            SignUpRequestDto signUp5 = new SignUpRequestDto("test5@naver.com", "1234", "test1", "kakao1", "profile_storage_key_1");
 
             memberService.singUp(signUp1);
             memberService.singUp(signUp2);

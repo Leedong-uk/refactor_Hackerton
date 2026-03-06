@@ -8,6 +8,7 @@ import hackerton.refactor.domain.repository.AuthRepository;
 import hackerton.refactor.domain.repository.MemberRepository;
 import hackerton.refactor.domain.repository.ProfileImageRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final ProfileImageRepository profileImageRepository;
     private final AuthRepository authRepository;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * 회원가입
@@ -25,6 +27,9 @@ public class MemberService {
     @Transactional
     public Long singUp(SignUpRequestDto request) {
         Member member = Member.of(request);
+        String encodedPassword = passwordEncoder.encode(request.getPassword());
+        member.setPassword(encodedPassword);
+
         Member savedMember = memberRepository.save(member);
 
         ProfileImage profileImage = ProfileImage.of(request.getProfileImageKey(),savedMember);
