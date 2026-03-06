@@ -2,6 +2,7 @@ package hackerton.refactor.general.advice;
 
 import hackerton.refactor.general.exception.CustomException;
 import hackerton.refactor.general.response.ApiResponse;
+import hackerton.refactor.general.util.StatusCodeHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +15,10 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<ApiResponse> handleCustomException(CustomException e) {
+        StatusCodeHelper statusCodeHelper = StatusCodeHelper.of(e.getBadStatusCode());
         return ResponseEntity
-                .status(e.getBadStatusCode().getHttpStatus())
-                .body(ApiResponse.fail(e.getBadStatusCode().getHttpStatus().value(), e.getMessage()));
+                .status(statusCodeHelper.getHttpStatus())
+                .body(ApiResponse.fail(statusCodeHelper.getStatusValue(), statusCodeHelper.getMessage()));
     }
 
     @ExceptionHandler(Exception.class)

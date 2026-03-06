@@ -1,5 +1,6 @@
 package hackerton.refactor.general.security.config;
 
+import hackerton.refactor.general.security.filter.ExceptionHandlerFilter;
 import hackerton.refactor.general.security.filter.JwtAuthenticationFilter;
 import hackerton.refactor.general.security.filter.LoginFilter;
 import hackerton.refactor.general.security.handler.LoginFailureHandler;
@@ -23,6 +24,7 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final LoginSuccessHandler loginSuccessHandler;
     private final LoginFailureHandler loginFailureHandler;
+    private final ExceptionHandlerFilter exceptionHandlerFilter;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -45,8 +47,11 @@ public class SecurityConfig {
                         .requestMatchers("/auth/login").permitAll()
                         .anyRequest().authenticated()
                 );
-        http.addFilter(loginFilter);
-        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
+        http
+                .addFilterBefore(exceptionHandlerFilter, UsernamePasswordAuthenticationFilter.class) // 최상단 예외 처리
+                .addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class)           // 로그인 처리
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class); // JWT 인증
         return http.build();
     }
 }

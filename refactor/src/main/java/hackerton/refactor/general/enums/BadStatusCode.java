@@ -27,6 +27,7 @@
             TOKEN_EXPIRED_EXCEPTION(HttpStatus.UNAUTHORIZED, "토큰이 만료되었습니다."),
             LOGIN_FAILURE_EXCEPTION(HttpStatus.UNAUTHORIZED,"아이디 혹은 비밀번호를 잘못 입력 했습니다."),
             INVALID_TOKEN_SIGNATURE(HttpStatus.UNAUTHORIZED,"토큰의 서명이 유효하지 않습니다."),
+            TOKEN_NOT_SUPPORT_EXCEPTION(HttpStatus.UNAUTHORIZED,"지원되지 않거나 잘못된 토큰 입니다."),
 
 
             // 403 Forbidden (주로 인가)
