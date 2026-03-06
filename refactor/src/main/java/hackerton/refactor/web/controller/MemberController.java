@@ -18,7 +18,6 @@ public class MemberController {
     @PatchMapping("/password")
     @ApiSuccess(message = "password.change.success")
     public void changePassword(@RequestBody ChangePasswordRequest request) {
-        log.info("request={}",request);
         memberService.updatePassword(request.getId(), request.getNewPassword());
     }
 

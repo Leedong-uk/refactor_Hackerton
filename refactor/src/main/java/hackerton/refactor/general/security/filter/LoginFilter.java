@@ -29,7 +29,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
         LoginRequest loginRequest = LoginRequest.of(request);
-        log.info("✨✨✨✨✨✨✨✨✨✨loginRequest={}",loginRequest);
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword());
         return getAuthenticationManager().authenticate(token);
     }

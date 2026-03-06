@@ -7,6 +7,8 @@ import hackerton.refactor.domain.entity.member.ProfileImage;
 import hackerton.refactor.domain.repository.AuthRepository;
 import hackerton.refactor.domain.repository.MemberRepository;
 import hackerton.refactor.domain.repository.ProfileImageRepository;
+import hackerton.refactor.general.enums.BadStatusCode;
+import hackerton.refactor.general.exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,7 @@ public class MemberService {
      */
     @Transactional
     public Long singUp(SignUpRequestDto request) {
+
         Member member = Member.of(request);
         String encodedPassword = passwordEncoder.encode(request.getPassword());
         member.setPassword(encodedPassword);
@@ -57,7 +60,7 @@ public class MemberService {
     @Transactional
     public void updatePassword(Long memberId, String newPassword) {
         if (memberId == 0 || newPassword.isEmpty()) {
-            throw new IllegalArgumentException("비밀번호 변경에 실패 했습니다");
+            throw new BadRequestException(BadStatusCode.INVALID_PARAMETER_EXCEPTION);
         }
         Member findMember = memberRepository.findMemberById(memberId);
         findMember.setPassword(newPassword);

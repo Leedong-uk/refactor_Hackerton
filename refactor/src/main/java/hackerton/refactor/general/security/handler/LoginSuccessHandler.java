@@ -7,6 +7,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -34,7 +35,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         data.put("accessToken", accessToken);
         data.put("refreshToken", refreshToken);
 
-        ApiResponse<Map<String, String>> result = ApiResponse.success(201, "로그인에 성공 했습니다", data);
+        ApiResponse<Map<String, String>> result = ApiResponse.success(HttpStatus.OK.value(), "로그인에 성공 했습니다", data);
 
         response.setContentType("application/json");
         response.setStatus(HttpServletResponse.SC_OK);

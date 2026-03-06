@@ -1,9 +1,12 @@
-package hackerton.refactor.general.response;
+package hackerton.refactor.general.advice;
 
+import hackerton.refactor.general.response.ApiResponse;
+import hackerton.refactor.general.response.ApiSuccess;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.MethodParameter;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
@@ -29,10 +32,10 @@ public class ApiResponseAdvice implements ResponseBodyAdvice<Object> {
             return body;
 
         ApiSuccess methodAnnotation = returnType.getMethodAnnotation(ApiSuccess.class);
-        int statusCode = methodAnnotation.statusCode();
+        int httpStatus = methodAnnotation.statusCode().value();
         String messageCode = methodAnnotation.message();
         String message = messageSource.getMessage(messageCode, null,messageCode, LocaleContextHolder.getLocale());
 
-        return ApiResponse.success(statusCode,message,body);
+        return ApiResponse.success(httpStatus,message,body);
     }
 }
