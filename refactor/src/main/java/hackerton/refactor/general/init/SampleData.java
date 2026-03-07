@@ -2,7 +2,7 @@ package hackerton.refactor.general.init;
 
 
 import hackerton.refactor.domain.entity.business.BusinessCode;
-import hackerton.refactor.domain.repository.BusinessCodeRepository;
+import hackerton.refactor.domain.repository.business.BusinessCodeRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;

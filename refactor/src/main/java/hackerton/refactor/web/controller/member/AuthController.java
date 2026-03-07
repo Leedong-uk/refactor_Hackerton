@@ -1,6 +1,8 @@
 package hackerton.refactor.web.controller.member;
 
+import hackerton.refactor.domain.dto.member.BusinessUpdateRequest;
 import hackerton.refactor.domain.dto.member.SignUpRequestDto;
+import hackerton.refactor.domain.service.BusinessService;
 import hackerton.refactor.domain.service.MemberService;
 import hackerton.refactor.general.response.ApiSuccess;
 import hackerton.refactor.general.security.userdetail.CustomUser;
@@ -14,9 +16,10 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthController {
     private final MemberService memberService;
+    private final BusinessService businessService;
 
     @PostMapping("/member-info")
-    @ApiSuccess(statusCode = HttpStatus.CREATED, message = "user.signup")
+    @ApiSuccess(statusCode = HttpStatus.OK, message = "user.signup")
     public void signUpMember(@RequestBody SignUpRequestDto dto) {
         memberService.signUp(dto);
 
@@ -33,11 +36,17 @@ public class AuthController {
 
 
     /**
-     * 회원 정보 수정 -> 더티 체킹
+     * 회원 정보 (사업자 정보) 수정-> 더티 체킹
      */
+    @PatchMapping("/member-info")
+    @ApiSuccess(message = "user.update")
+    public void updateUserInfo(@AuthenticationPrincipal CustomUser user, @RequestBody BusinessUpdateRequest request) {
+        businessService.updateBusiness(user.getMemberId(),request);
+    }
+
 
     /**
-     * 회원 정보
+     * 회원 정보 불러오기
      */
 
     /**

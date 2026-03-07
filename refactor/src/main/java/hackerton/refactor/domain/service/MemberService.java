@@ -6,7 +6,8 @@ import hackerton.refactor.domain.entity.business.BusinessCode;
 import hackerton.refactor.domain.entity.member.Auth;
 import hackerton.refactor.domain.entity.member.Member;
 import hackerton.refactor.domain.entity.member.ProfileImage;
-import hackerton.refactor.domain.repository.*;
+import hackerton.refactor.domain.repository.business.BusinessCodeRepository;
+import hackerton.refactor.domain.repository.member.MemberRepository;
 import hackerton.refactor.general.enums.BadStatusCode;
 import hackerton.refactor.general.exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
@@ -21,10 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class MemberService {
     private final MemberRepository memberRepository;
-    private final ProfileImageRepository profileImageRepository;
-    private final AuthRepository authRepository;
     private final PasswordEncoder passwordEncoder;
-    private final BusinessRepository businessRepository;
     private final BusinessCodeRepository businessCodeRepository;
 
     /**

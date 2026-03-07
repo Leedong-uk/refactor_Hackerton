@@ -1,7 +1,7 @@
 package hackerton.refactor.general.security.userdetail;
 
 import hackerton.refactor.domain.entity.member.Member;
-import hackerton.refactor.domain.repository.MemberRepository;
+import hackerton.refactor.domain.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
