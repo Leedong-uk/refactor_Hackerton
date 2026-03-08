@@ -10,7 +10,7 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-public class ProfileImage extends BaseTimeEntity {
+public class ProfileImage{
     @Id
     @GeneratedValue
     @Column(name = "profile_image_id")
@@ -29,7 +29,6 @@ public class ProfileImage extends BaseTimeEntity {
     // 생성 메서드 //
     public void addMember(Member member) {
         this.member = member;
-        member.setProfileImage(this);
     }
 
 

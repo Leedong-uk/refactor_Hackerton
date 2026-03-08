@@ -13,18 +13,17 @@ public class CustomUser extends User {
     private String name;
     private String email;
 
-    public CustomUser(CustomUserRequest dto) {
-        super(dto.getEmail(),
+    public CustomUser(LoginMemberDto dto) {
+        super(
+                dto.getEmail(),
                 dto.getPassword(),
-                dto.getAuths().stream()
-                        .map(auth -> new SimpleGrantedAuthority("ROLE_" + auth.getStatus().name()))
+                dto.getAuthStatuses().stream()
+                        .map(auth -> new SimpleGrantedAuthority("ROLE_" + auth.name()))
                         .collect(Collectors.toList())
         );
 
         this.memberId = dto.getMemberId();
-        this.name = dto.getName();
+        this.name = dto.getMemberName();
         this.email = dto.getEmail();
-
     }
-
 }

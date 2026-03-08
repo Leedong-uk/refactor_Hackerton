@@ -3,9 +3,12 @@ package hackerton.refactor.web.controller.member;
 import hackerton.refactor.domain.dto.member.ChangePasswordRequest;
 import hackerton.refactor.domain.service.MemberService;
 import hackerton.refactor.general.response.ApiSuccess;
+import hackerton.refactor.general.security.userdetail.CustomUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,8 +20,8 @@ public class MemberController {
 
     @PatchMapping("/password")
     @ApiSuccess(message = "user.password.change")
-    public void changePassword(@RequestBody ChangePasswordRequest request) {
-        memberService.updatePassword(request.getId(), request.getNewPassword());
+    public void changePassword(@AuthenticationPrincipal CustomUser user, @RequestBody ChangePasswordRequest request) {
+        memberService.updatePassword(user.getMemberId(), request.getNewPassword());
     }
 
 }

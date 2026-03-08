@@ -71,7 +71,7 @@ public class QBusiness extends EntityPathBase<Business> {
     public QBusiness(Class<? extends Business> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.businessCode = inits.isInitialized("businessCode") ? new QBusinessCode(forProperty("businessCode")) : null;
-        this.member = inits.isInitialized("member") ? new hackerton.refactor.domain.entity.member.QMember(forProperty("member"), inits.get("member")) : null;
+        this.member = inits.isInitialized("member") ? new hackerton.refactor.domain.entity.member.QMember(forProperty("member")) : null;
     }
 
 }

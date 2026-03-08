@@ -22,15 +22,7 @@ public class QProfileImage extends EntityPathBase<ProfileImage> {
 
     public static final QProfileImage profileImage = new QProfileImage("profileImage");
 
-    public final hackerton.refactor.domain.entity.base.QBaseTimeEntity _super = new hackerton.refactor.domain.entity.base.QBaseTimeEntity(this);
-
-    //inherited
-    public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
-
     public final NumberPath<Long> id = createNumber("id", Long.class);
-
-    //inherited
-    public final DateTimePath<java.time.LocalDateTime> lastModifiedDate = _super.lastModifiedDate;
 
     public final QMember member;
 
@@ -54,7 +46,7 @@ public class QProfileImage extends EntityPathBase<ProfileImage> {
 
     public QProfileImage(Class<? extends ProfileImage> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.member = inits.isInitialized("member") ? new QMember(forProperty("member"), inits.get("member")) : null;
+        this.member = inits.isInitialized("member") ? new QMember(forProperty("member")) : null;
     }
 
 }

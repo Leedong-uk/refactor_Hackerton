@@ -7,7 +7,6 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
-import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -33,8 +32,6 @@ public class QAnnounce extends EntityPathBase<Announce> {
     public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
 
     public final StringPath description = createString("description");
-
-    public final ListPath<Document, QDocument> documents = this.<Document, QDocument>createList("documents", Document.class, QDocument.class, PathInits.DIRECT2);
 
     public final StringPath excInsttNm = createString("excInsttNm");
 

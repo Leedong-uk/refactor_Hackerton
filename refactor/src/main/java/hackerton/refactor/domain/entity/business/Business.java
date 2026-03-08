@@ -49,6 +49,5 @@ public class Business extends BaseEntity {
 
     public void addMember(Member member) {
         this.member = member;
-        member.setBusiness(this);
     }
 }

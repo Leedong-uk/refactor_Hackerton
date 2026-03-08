@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public interface BusinessRepository extends JpaRepository<Business,Long> {
+public interface BusinessRepository extends JpaRepository<Business,Long>,BusinessQueryRepository {
 
+    void removeByMemberId(Long id);
 }

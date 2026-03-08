@@ -34,17 +34,6 @@ public class Member extends BaseEntity {
     private String fcmToken;
 
 
-    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-    private ProfileImage profileImage;
-
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Auth> auths = new ArrayList<>();
-
-    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Business business;
-
-
-
     // 편의 메서드 //
     public static Member of(SignUpRequestDto dto) {
         Member member = new Member();

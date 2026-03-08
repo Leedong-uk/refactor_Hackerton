@@ -36,11 +36,4 @@ public class Announce extends BaseEntity {
     private String filePath;
     private String fileName;
 
-    @OneToMany(mappedBy = "announce", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Document> documents = new ArrayList<>();
-
-    public void addDocument(Document document) {
-        documents.add(document);
-        document.setAnnounce(this);
-    }
 }

@@ -64,7 +64,7 @@ public class QAlarm extends EntityPathBase<Alarm> {
 
     public QAlarm(Class<? extends Alarm> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.member = inits.isInitialized("member") ? new hackerton.refactor.domain.entity.member.QMember(forProperty("member"), inits.get("member")) : null;
+        this.member = inits.isInitialized("member") ? new hackerton.refactor.domain.entity.member.QMember(forProperty("member")) : null;
     }
 
 }

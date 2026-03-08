@@ -1,4 +1,4 @@
-package hackerton.refactor.domain.entity.member;
+package hackerton.refactor.domain.entity.auth;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -16,23 +16,15 @@ import com.querydsl.core.types.dsl.PathInits;
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QAuth extends EntityPathBase<Auth> {
 
-    private static final long serialVersionUID = 433515096L;
+    private static final long serialVersionUID = -986804470L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
     public static final QAuth auth = new QAuth("auth");
 
-    public final hackerton.refactor.domain.entity.base.QBaseTimeEntity _super = new hackerton.refactor.domain.entity.base.QBaseTimeEntity(this);
-
-    //inherited
-    public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
-
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    //inherited
-    public final DateTimePath<java.time.LocalDateTime> lastModifiedDate = _super.lastModifiedDate;
-
-    public final QMember member;
+    public final hackerton.refactor.domain.entity.member.QMember member;
 
     public final EnumPath<AuthStatus> status = createEnum("status", AuthStatus.class);
 
@@ -54,7 +46,7 @@ public class QAuth extends EntityPathBase<Auth> {
 
     public QAuth(Class<? extends Auth> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.member = inits.isInitialized("member") ? new QMember(forProperty("member"), inits.get("member")) : null;
+        this.member = inits.isInitialized("member") ? new hackerton.refactor.domain.entity.member.QMember(forProperty("member")) : null;
     }
 
 }

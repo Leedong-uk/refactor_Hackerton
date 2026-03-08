@@ -1,14 +1,16 @@
 package hackerton.refactor.domain.service;
 
-import hackerton.refactor.domain.dto.member.MemberInfoResponse;
 import hackerton.refactor.domain.dto.member.SignUpRequestDto;
 import hackerton.refactor.domain.entity.business.Business;
 import hackerton.refactor.domain.entity.business.BusinessCode;
-import hackerton.refactor.domain.entity.member.Auth;
+import hackerton.refactor.domain.entity.auth.Auth;
 import hackerton.refactor.domain.entity.member.Member;
 import hackerton.refactor.domain.entity.member.ProfileImage;
 import hackerton.refactor.domain.repository.business.BusinessCodeRepository;
+import hackerton.refactor.domain.repository.business.BusinessRepository;
+import hackerton.refactor.domain.repository.auth.AuthRepository;
 import hackerton.refactor.domain.repository.member.MemberRepository;
+import hackerton.refactor.domain.repository.member.ProfileImageRepository;
 import hackerton.refactor.general.enums.BadStatusCode;
 import hackerton.refactor.general.exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,9 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final BusinessCodeRepository businessCodeRepository;
+    private final BusinessRepository businessRepository;
+    private final ProfileImageRepository profileImageRepository;
+    private final AuthRepository authRepository;
 
     /**
      * 회원가입
@@ -37,27 +42,29 @@ public class MemberService {
         // 2. Member 생성
         Member member = Member.of(request);
         member.setPassword(passwordEncoder.encode(request.getPassword()));
+        memberRepository.save(member);
+
 
         // 3. Business 생성
         Business business = Business.of(request);
         business.setBusinessCode(businessCode);
         business.addMember(member);
+        businessRepository.save(business);
+
 
         // 4. 권한 및 프로필 이미지 설정
         Auth auth = new Auth();
         auth.addMember(member);
+        authRepository.save(auth);
 
         ProfileImage profileImage = new ProfileImage();
         if (request.getProfileImageKey().isEmpty()) {
-            profileImage.setStorageKey("/images/default-profile.png");
-        } else {
-            profileImage.setStorageKey(request.getProfileImageKey());
-        }
+            profileImage.setStorageKey("/images/default-profile.png");}
+        else {
+            profileImage.setStorageKey(request.getProfileImageKey());}
+
         profileImage.addMember(member);
-
-
-        // 5. 최종 저장
-        memberRepository.save(member);
+        profileImageRepository.save(profileImage);
 
         return member.getId();
     }
@@ -68,6 +75,9 @@ public class MemberService {
      */
     @Transactional
     public void signOut(Long id) {
+        authRepository.removeByMemberId(id);
+        profileImageRepository.removeByMemberId(id);
+        businessRepository.removeByMemberId(id);
         memberRepository.removeById(id);
     }
 
@@ -87,11 +97,11 @@ public class MemberService {
     /**
      * 회원 정보 불러오기
      */
-    public MemberInfoResponse getMemberInfo(Long id) {
-        Member findMember = memberRepository.findMemberWithBusinessAndProfileImage(id);
-        findMember.getBusiness().getBusinessCode().getMinorName();
-        return new MemberInfoResponse(findMember.getName(), findMember.getProfileImage().getStorageKey(), findMember.getBadge(), findMember.getBusiness().getName(), findMember.getBusiness().getBusinessCode().getMinorName());
-    }
+//    public MemberInfoResponse getMemberInfo(Long id) {
+//        Member findMember = memberRepository.findMemberWithBusinessAndProfileImage(id);
+//        findMember.getBusiness().getBusinessCode().getMinorName();
+//        return new MemberInfoResponse(findMember.getName(), findMember.getProfileImage().getStorageKey(), findMember.getBadge(), findMember.getBusiness().getName(), findMember.getBusiness().getBusinessCode().getMinorName());
+//    }
 
 
 }

@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
         log.info("🔎 stackTrace : {}",e.getStackTrace());
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(ApiResponse.fail(HttpStatus.INTERNAL_SERVER_ERROR.value(),"서버 내부 오류가 발생 하였습니다 "));
+                .body(ApiResponse.fail(HttpStatus.INTERNAL_SERVER_ERROR.value(),e.getMessage()));
     }
 
 }

@@ -1,6 +1,7 @@
 package hackerton.refactor.domain.service;
 
 import hackerton.refactor.domain.dto.member.BusinessUpdateRequest;
+import hackerton.refactor.domain.dto.member.MemberBusinessDto;
 import hackerton.refactor.domain.entity.business.Business;
 import hackerton.refactor.domain.entity.business.BusinessCode;
 import hackerton.refactor.domain.entity.member.Member;
@@ -23,21 +24,22 @@ public class BusinessService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public void updateBusiness(Long memberId,BusinessUpdateRequest request) {
+    public void updateBusiness(Long memberId, BusinessUpdateRequest request) {
 
-        BusinessCode findCode = businessCodeRepository.findBusinessCodeByMinorName(request.getMinorName());
-        Member findMember = memberRepository.findMemberFetchWithBusiness(memberId);
-        Business findBusiness = findMember.getBusiness();
+        BusinessCode newCode = businessCodeRepository.findBusinessCodeByMinorName(request.getMinorName());
 
-        findBusiness.setBusinessNumber(request.getBusinessNumber());
-        findMember.setName(request.getMemberName());
-        findBusiness.setName(request.getBusinessNm());
-        findBusiness.setBusinessOpenDate(request.getBusinessOpenDate());
-        findBusiness.setBusinessCode(findCode);
-        findBusiness.setBusinessAddr(request.getBusinessAddr());
-        findBusiness.setBusinessAddrDetail(request.getBusinessAddrDetail());
 
-        log.info("findBusiness ={}",findBusiness);
+        Business business = businessRepository.findBusinessWithMember(memberId);
+
+        business.setBusinessNumber(request.getBusinessNumber());
+        business.setName(request.getBusinessNm());
+        business.setBusinessOpenDate(request.getBusinessOpenDate());
+        business.setBusinessCode(newCode);
+        business.setBusinessAddr(request.getBusinessAddr());
+        business.setBusinessAddrDetail(request.getBusinessAddrDetail());
+        business.getMember().setName(request.getMemberName());
+
+
     }
 
 }

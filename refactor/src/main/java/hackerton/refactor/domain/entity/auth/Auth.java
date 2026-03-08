@@ -1,15 +1,14 @@
-package hackerton.refactor.domain.entity.member;
+package hackerton.refactor.domain.entity.auth;
 
 import hackerton.refactor.domain.entity.base.BaseTimeEntity;
+import hackerton.refactor.domain.entity.member.Member;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter @Setter
-public class Auth extends BaseTimeEntity {
+public class Auth  {
 
     @Id
     @GeneratedValue
@@ -29,6 +28,5 @@ public class Auth extends BaseTimeEntity {
     public void addMember(Member member) {
         this.member = member;
         this.status = AuthStatus.USER;
-        member.getAuths().add(this);
     }
 }
