@@ -49,7 +49,7 @@ public class QMember extends EntityPathBase<Member> {
 
     public final StringPath password = createString("password");
 
-    public final EnumPath<hackerton.refactor.domain.entity.MemberStatus> status = createEnum("status", hackerton.refactor.domain.entity.MemberStatus.class);
+    public final EnumPath<MemberStatus> status = createEnum("status", MemberStatus.class);
 
     public QMember(String variable) {
         super(Member.class, forVariable(variable));

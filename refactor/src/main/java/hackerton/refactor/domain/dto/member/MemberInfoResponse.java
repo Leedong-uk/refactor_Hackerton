@@ -18,4 +18,12 @@ public class MemberInfoResponse {
         this.businessName = businessName;
         this.minorName = minorName;
     }
+
+    public static MemberInfoResponse of(MemberBusinessProfileDto dto) {
+        return new MemberInfoResponse(dto.getMemberName(),
+                dto.getProfileImageKey(),
+                dto.getBadge(),
+                dto.getBusinessName(),
+                dto.getMinorName());
+    }
 }

@@ -2,13 +2,8 @@ package hackerton.refactor.domain.entity.member;
 
 import hackerton.refactor.domain.dto.member.SignUpRequestDto;
 import hackerton.refactor.domain.entity.base.BaseEntity;
-import hackerton.refactor.domain.entity.MemberStatus;
-import hackerton.refactor.domain.entity.business.Business;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter @Setter

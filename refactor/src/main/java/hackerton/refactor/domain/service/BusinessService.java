@@ -1,10 +1,8 @@
 package hackerton.refactor.domain.service;
 
 import hackerton.refactor.domain.dto.member.BusinessUpdateRequest;
-import hackerton.refactor.domain.dto.member.MemberBusinessDto;
 import hackerton.refactor.domain.entity.business.Business;
 import hackerton.refactor.domain.entity.business.BusinessCode;
-import hackerton.refactor.domain.entity.member.Member;
 import hackerton.refactor.domain.repository.business.BusinessCodeRepository;
 import hackerton.refactor.domain.repository.business.BusinessRepository;
 import hackerton.refactor.domain.repository.member.MemberRepository;

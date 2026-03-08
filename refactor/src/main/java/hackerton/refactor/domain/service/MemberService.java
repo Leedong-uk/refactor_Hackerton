@@ -1,6 +1,9 @@
 package hackerton.refactor.domain.service;
 
+import hackerton.refactor.domain.dto.member.MemberBusinessProfileDto;
+import hackerton.refactor.domain.dto.member.MemberInfoResponse;
 import hackerton.refactor.domain.dto.member.SignUpRequestDto;
+import hackerton.refactor.domain.entity.auth.AuthStatus;
 import hackerton.refactor.domain.entity.business.Business;
 import hackerton.refactor.domain.entity.business.BusinessCode;
 import hackerton.refactor.domain.entity.auth.Auth;
@@ -18,6 +21,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -97,11 +103,10 @@ public class MemberService {
     /**
      * 회원 정보 불러오기
      */
-//    public MemberInfoResponse getMemberInfo(Long id) {
-//        Member findMember = memberRepository.findMemberWithBusinessAndProfileImage(id);
-//        findMember.getBusiness().getBusinessCode().getMinorName();
-//        return new MemberInfoResponse(findMember.getName(), findMember.getProfileImage().getStorageKey(), findMember.getBadge(), findMember.getBusiness().getName(), findMember.getBusiness().getBusinessCode().getMinorName());
-//    }
+    public MemberInfoResponse getMemberInfo(Long id) {
+        MemberBusinessProfileDto result = memberRepository.findMemberWithBusinessAndProfile(id);
+        return MemberInfoResponse.of(result);
+    }
 
 
 }
