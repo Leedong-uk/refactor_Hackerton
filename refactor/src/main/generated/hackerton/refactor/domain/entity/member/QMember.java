@@ -56,7 +56,7 @@ public class QMember extends EntityPathBase<Member> {
 
     public final StringPath password = createString("password");
 
-    public final ListPath<ProfileImage, QProfileImage> profileImages = this.<ProfileImage, QProfileImage>createList("profileImages", ProfileImage.class, QProfileImage.class, PathInits.DIRECT2);
+    public final QProfileImage profileImage;
 
     public final EnumPath<hackerton.refactor.domain.entity.MemberStatus> status = createEnum("status", hackerton.refactor.domain.entity.MemberStatus.class);
 
@@ -79,6 +79,7 @@ public class QMember extends EntityPathBase<Member> {
     public QMember(Class<? extends Member> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.business = inits.isInitialized("business") ? new hackerton.refactor.domain.entity.business.QBusiness(forProperty("business"), inits.get("business")) : null;
+        this.profileImage = inits.isInitialized("profileImage") ? new QProfileImage(forProperty("profileImage"), inits.get("profileImage")) : null;
     }
 
 }

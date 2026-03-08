@@ -10,7 +10,6 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProfileImage extends BaseTimeEntity {
     @Id
     @GeneratedValue
@@ -20,17 +19,17 @@ public class ProfileImage extends BaseTimeEntity {
     @Column(nullable = false)
     private String storageKey = "";
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id",nullable = false)
     private Member member;
 
+    public ProfileImage() {
+    }
+
     // 생성 메서드 //
-    public static ProfileImage of(String storageKey , Member member) {
-        ProfileImage profileImage = new ProfileImage();
-        profileImage.setStorageKey(storageKey);
-        profileImage.setMember(member);
-        member.getProfileImages().add(profileImage);
-        return profileImage;
+    public void addMember(Member member) {
+        this.member = member;
+        member.setProfileImage(this);
     }
 
 

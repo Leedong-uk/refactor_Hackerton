@@ -47,7 +47,7 @@ public class QMemberFavorite extends EntityPathBase<MemberFavorite> {
     public QMemberFavorite(Class<? extends MemberFavorite> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.announce = inits.isInitialized("announce") ? new hackerton.refactor.domain.entity.announce.QAnnounce(forProperty("announce")) : null;
-        this.member = inits.isInitialized("member") ? new QMember(forProperty("member")) : null;
+        this.member = inits.isInitialized("member") ? new QMember(forProperty("member"), inits.get("member")) : null;
     }
 
 }

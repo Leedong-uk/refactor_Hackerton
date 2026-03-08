@@ -1,6 +1,7 @@
 package hackerton.refactor.web.controller.member;
 
 import hackerton.refactor.domain.dto.member.BusinessUpdateRequest;
+import hackerton.refactor.domain.dto.member.MemberInfoResponse;
 import hackerton.refactor.domain.dto.member.SignUpRequestDto;
 import hackerton.refactor.domain.service.BusinessService;
 import hackerton.refactor.domain.service.MemberService;
@@ -48,6 +49,11 @@ public class AuthController {
     /**
      * 회원 정보 불러오기
      */
+    @GetMapping("/member-info/{id}")
+    @ApiSuccess()
+    public MemberInfoResponse getMemberInfo(@PathVariable Long id ) {
+        return memberService.getMemberInfo(id);
+    }
 
     /**
      * 이메일 인증

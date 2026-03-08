@@ -1,5 +1,6 @@
 package hackerton.refactor.domain.service;
 
+import hackerton.refactor.domain.dto.member.MemberInfoResponse;
 import hackerton.refactor.domain.dto.member.SignUpRequestDto;
 import hackerton.refactor.domain.entity.business.Business;
 import hackerton.refactor.domain.entity.business.BusinessCode;
@@ -46,7 +47,14 @@ public class MemberService {
         Auth auth = new Auth();
         auth.addMember(member);
 
-        ProfileImage profileImage = ProfileImage.of(request.getProfileImageKey(), member);
+        ProfileImage profileImage = new ProfileImage();
+        if (request.getProfileImageKey().isEmpty()) {
+            profileImage.setStorageKey("/images/default-profile.png");
+        } else {
+            profileImage.setStorageKey(request.getProfileImageKey());
+        }
+        profileImage.addMember(member);
+
 
         // 5. 최종 저장
         memberRepository.save(member);
@@ -63,6 +71,7 @@ public class MemberService {
         memberRepository.removeById(id);
     }
 
+
     /**
      * 비밀 번호 변경
      */
@@ -73,6 +82,15 @@ public class MemberService {
         }
         Member findMember = memberRepository.findMemberById(memberId);
         findMember.setPassword(newPassword);
+    }
+
+    /**
+     * 회원 정보 불러오기
+     */
+    public MemberInfoResponse getMemberInfo(Long id) {
+        Member findMember = memberRepository.findMemberWithBusinessAndProfileImage(id);
+        findMember.getBusiness().getBusinessCode().getMinorName();
+        return new MemberInfoResponse(findMember.getName(), findMember.getProfileImage().getStorageKey(), findMember.getBadge(), findMember.getBusiness().getName(), findMember.getBusiness().getBusinessCode().getMinorName());
     }
 
 

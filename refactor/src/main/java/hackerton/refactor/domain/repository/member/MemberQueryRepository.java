@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 public interface MemberQueryRepository {
     Member findMemberFetchWithBusiness(Long id);
+
+    Member findMemberWithBusinessAndProfileImage(Long id);
 }

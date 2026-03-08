@@ -49,7 +49,7 @@ public class QMemberDocumentCheck extends EntityPathBase<MemberDocumentCheck> {
     public QMemberDocumentCheck(Class<? extends MemberDocumentCheck> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.document = inits.isInitialized("document") ? new hackerton.refactor.domain.entity.announce.QDocument(forProperty("document"), inits.get("document")) : null;
-        this.member = inits.isInitialized("member") ? new hackerton.refactor.domain.entity.member.QMember(forProperty("member")) : null;
+        this.member = inits.isInitialized("member") ? new hackerton.refactor.domain.entity.member.QMember(forProperty("member"), inits.get("member")) : null;
     }
 
 }
