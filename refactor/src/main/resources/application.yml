@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: local
+    active: test
   Jackson:
     property-naming-strategy: SNAKE_CASE
 
