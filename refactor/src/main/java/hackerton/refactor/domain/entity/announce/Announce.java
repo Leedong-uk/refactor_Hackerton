@@ -13,7 +13,6 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Announce extends BaseEntity {
     @Id
     @GeneratedValue
@@ -36,4 +35,6 @@ public class Announce extends BaseEntity {
     private String filePath;
     private String fileName;
 
+    public Announce() {
+    }
 }
