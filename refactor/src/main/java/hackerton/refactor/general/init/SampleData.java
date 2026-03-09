@@ -1,7 +1,9 @@
 package hackerton.refactor.general.init;
 
 
+import hackerton.refactor.domain.entity.Article;
 import hackerton.refactor.domain.entity.business.BusinessCode;
+import hackerton.refactor.domain.repository.article.ArticleRepository;
 import hackerton.refactor.domain.repository.business.BusinessCodeRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -16,9 +18,12 @@ public class SampleData {
     private final InitService initService;
 
     @PostConstruct
-    @Profile("local")
+    @Profile("test")
     public void init() {
-        initService.init();
+        initService.initBusinessCode();
+        initService.initArticle();
+
+
     }
 
     @Service
@@ -26,8 +31,27 @@ public class SampleData {
     @RequiredArgsConstructor
     static class InitService {
         private final BusinessCodeRepository businessCodeRepository;
+        private final ArticleRepository articleRepository;
 
-        public void init() {
+        public void initArticle() {
+            String[] topics = {"디지털 전환", "금융 지원", "상권 활성화", "온라인 판로", "인건비 절감"};
+            String[] details = {
+                    "최근 고물가와 고금리 여파로 인해 소상공인들의 경영 환경이 악화되고 있습니다. 이에 정부는 디지털 전환 비용을 지원하고, 키오스크 및 스마트 오더 시스템 도입을 돕기 위해 예산을 대폭 확대했습니다. 현장의 반응은 긍정적이며, 매출 증대 효과를 기대하고 있습니다.",
+                    "골목상권 살리기를 위한 지역화폐 발행 규모가 확대됩니다. 소상공인들은 이를 통해 소비 유입이 늘어날 것으로 기대하고 있으며, 지역 사회와 함께 상생하는 지속 가능한 비즈니스 모델 구축이 필요하다는 목소리가 높아지고 있습니다.",
+                    "온라인 플랫폼을 활용한 판로 개척이 소상공인의 생존 전략으로 떠오르고 있습니다. SNS 마케팅 교육을 수료한 한 사장님은 '디지털 도구를 적극적으로 활용하니 매출이 이전보다 40% 이상 상승했다'며 디지털 역량 강화의 중요성을 강조했습니다."
+            };
+
+            for (int i = 1; i <= 100; i++) {
+                Article article = new Article();
+                article.setTitle("소상공인 경영 트렌드 #" + i + ": " + topics[i % 5]);
+                article.setContent(details[i % 3] + "\n\n(상세 내용 " + i + "번: 소상공인 성공 사례와 정부 정책 가이드라인을 포함한 심층 리포트입니다. 자세한 수치는 관련 부처의 공식 발표를 참고하시기 바랍니다.)");
+                article.setAuthor("경제부 기자_" + (i % 5 + 1));
+                article.setUrl("testurl/" + i);
+                articleRepository.save(article);
+            }
+        }
+
+        public void initBusinessCode() {
             businessCodeRepository.save(new BusinessCode("A", "농업, 임업 및 어업", "01", "농업", "0111", "곡물 및 기타 식량작물 재배업"));
             businessCodeRepository.save(new BusinessCode( "A", "농업, 임업 및 어업", "01", "농업", "0112", "채소, 화훼작물 및 과실작물 재배업"));
             businessCodeRepository.save(new BusinessCode("A", "농업, 임업 및 어업", "01", "농업", "0121", "소 사육업"));

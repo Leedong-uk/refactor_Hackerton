@@ -9,7 +9,6 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Article extends BaseEntity {
     @Id
     @GeneratedValue
@@ -21,4 +20,7 @@ public class Article extends BaseEntity {
     private String author;
     @Column(length = 500)
     private String url;
+
+    public Article() {
+    }
 }
