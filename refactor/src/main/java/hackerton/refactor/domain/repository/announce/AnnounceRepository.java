@@ -6,6 +6,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface AnnounceRepository extends JpaRepository<Announce,Long> {
-    Slice<Announce> findAllBy(Pageable pageable);
+public interface AnnounceRepository extends JpaRepository<Announce,Long> , AnnounceQueryRepository{
+    Announce findAnnounceById(Long id);
 }

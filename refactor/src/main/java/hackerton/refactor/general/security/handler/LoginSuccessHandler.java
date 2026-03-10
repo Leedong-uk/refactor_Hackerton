@@ -32,8 +32,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException{
         CustomUser user =(CustomUser) authentication.getPrincipal();
 
-        String accessToken = jwtService.createAccessToken(user.getUsername(),user.getAuthStatuses());
-        String refreshToken = jwtService.createRefreshToken(user.getUsername(),user.getAuthStatuses());
+        String accessToken = jwtService.createAccessToken(user);
+        String refreshToken = jwtService.createRefreshToken(user);
 
         Map<String, String> data = new HashMap<>();
         data.put("accessToken", accessToken);

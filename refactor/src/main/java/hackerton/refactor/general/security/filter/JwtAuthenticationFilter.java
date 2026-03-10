@@ -1,6 +1,7 @@
 package hackerton.refactor.general.security.filter;
 
 import hackerton.refactor.general.security.JwtService;
+import hackerton.refactor.general.security.userdetail.CustomUser;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -30,8 +31,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String header = request.getHeader("Authorization");
 
         if (header == null || !header.startsWith("Bearer")) {
-            filterChain.doFilter(request,response);
-            return ;
+            filterChain.doFilter(request, response);
+            return;
         }
 
         String token = header.substring(7);
@@ -40,19 +41,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             Claims body = jwtService.extractBody(token);
 
+            Long memberId = body.get("memberId", Long.class);
             String email = body.getSubject();
             List<String> roles = body.get("roles", List.class);
 
-            List<SimpleGrantedAuthority> authorities = roles.stream()
+            List<SimpleGrantedAuthority> authorities =
+                    roles.stream()
                             .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                             .toList();
 
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(email, null, authorities);
+            CustomUser user = new CustomUser(memberId, email, authorities);
+
+            UsernamePasswordAuthenticationToken authentication =
+                    new UsernamePasswordAuthenticationToken(user, null, authorities);
+
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            filterChain.doFilter(request, response);
         }
-
-        filterChain.doFilter(request,response);
-
-
     }
 }

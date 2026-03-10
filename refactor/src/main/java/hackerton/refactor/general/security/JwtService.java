@@ -1,6 +1,7 @@
 package hackerton.refactor.general.security;
 
 import hackerton.refactor.domain.entity.auth.AuthStatus;
+import hackerton.refactor.general.security.userdetail.CustomUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -19,10 +20,14 @@ public class JwtService {
     private static final long REFRESH_EXPIRE = 1000L * 60 * 60 * 24 * 7;
 
 
-    private String createToken(String subject,long expire, List<AuthStatus> roles) {
+    private String createToken(CustomUser user ,long expire) {
         return Jwts.builder()
-                .setSubject(subject)
-                .claim("roles",roles)
+                .setSubject(user.getEmail())
+                .claim("memberId", user.getMemberId())
+                .claim("roles", user.getAuthorities()
+                        .stream()
+                        .map(auth -> auth.getAuthority())
+                        .toList())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expire))
                 .signWith(key)
@@ -30,12 +35,12 @@ public class JwtService {
     }
 
 
-    public String createAccessToken(String email , List<AuthStatus> roles) {
-        return createToken(email, ACCESS_EXPIRE,roles);
+    public String createAccessToken(CustomUser user) {
+        return createToken(user,ACCESS_EXPIRE);
     }
 
-    public String createRefreshToken(String email , List<AuthStatus> roles) {
-        return createToken(email, REFRESH_EXPIRE,roles);
+    public String createRefreshToken(CustomUser user) {
+        return createToken(user, REFRESH_EXPIRE);
     }
 
     public String extractSubject(String token) {

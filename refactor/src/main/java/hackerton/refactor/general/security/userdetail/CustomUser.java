@@ -31,4 +31,12 @@ public class CustomUser extends User {
         this.email = dto.getEmail();
         this.authStatuses = new ArrayList<>(dto.getAuthStatuses());
     }
+
+    public CustomUser(Long memberId, String email, List<SimpleGrantedAuthority> authorities) {
+        super(email, "", authorities);
+        this.memberId = memberId;
+        this.email = email;
+        this.name = null;
+        this.authStatuses = new ArrayList<>();
+    }
 }
