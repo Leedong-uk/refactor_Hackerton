@@ -97,7 +97,7 @@ public class MemberService {
             throw new BadRequestException(BadStatusCode.INVALID_PARAMETER_EXCEPTION);
         }
         Member findMember = memberRepository.findMemberById(memberId);
-        findMember.setPassword(newPassword);
+        findMember.setPassword(passwordEncoder.encode(newPassword));
     }
 
     /**

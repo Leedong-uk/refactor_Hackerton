@@ -49,12 +49,10 @@ public class AuthController {
     /**
      * 회원 정보 불러오기
      */
-
-
-    @GetMapping("/member-info/{id}")
+    @GetMapping("/member-info")
     @ApiSuccess()
-    public MemberInfoResponse getMemberInfo(@PathVariable Long id ) {
-        return memberService.getMemberInfo(id);
+    public MemberInfoResponse getMemberInfo(@AuthenticationPrincipal CustomUser user ) {
+        return memberService.getMemberInfo(user.getMemberId());
     }
 
     /**
