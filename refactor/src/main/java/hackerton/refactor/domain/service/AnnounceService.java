@@ -6,6 +6,7 @@ import hackerton.refactor.domain.repository.announce.AnnounceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,9 +17,9 @@ public class AnnounceService {
     private final AnnounceRepository announceRepository;
 
     public AnnounceListResponse getAnnounce(Pageable pageable) {
-        Page<Announce> page = announceRepository.findAll(pageable);
+        Slice<Announce> slice = announceRepository.findAllBy(pageable);
         AnnounceListResponse result = new AnnounceListResponse();
-        result.setAnnounces(new ArrayList<>(page.getContent()));
+        result.setAnnounces(new ArrayList<>(slice.getContent()));
         return result;
     }
 }

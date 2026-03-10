@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,10 +23,10 @@ public class ArticleService {
 
     public ArticleListResponse getArticles(Pageable pageable) {
 
-        Page<Article> page = articleRepository.findAll(pageable);
+        Slice<Article> slice = articleRepository.findAllBy(pageable);
 
         ArticleListResponse result = new ArticleListResponse();
-        result.setArticles(new ArrayList<>(page.getContent()));
+        result.setArticles(new ArrayList<>(slice.getContent()));
         return result;
     }
 }
