@@ -3,6 +3,7 @@ package hackerton.refactor.general.security.handler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hackerton.refactor.general.response.ApiResponse;
 import hackerton.refactor.general.security.JwtService;
+import hackerton.refactor.general.security.userdetail.CustomUser;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -29,10 +30,10 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException{
-        UserDetails user =(UserDetails)authentication.getPrincipal();
+        CustomUser user =(CustomUser) authentication.getPrincipal();
 
-        String accessToken = jwtService.createAccessToken(user.getUsername());
-        String refreshToken = jwtService.createRefreshToken(user.getUsername());
+        String accessToken = jwtService.createAccessToken(user.getUsername(),user.getAuthStatuses());
+        String refreshToken = jwtService.createRefreshToken(user.getUsername(),user.getAuthStatuses());
 
         Map<String, String> data = new HashMap<>();
         data.put("accessToken", accessToken);

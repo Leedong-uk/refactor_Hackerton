@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: test
+    active: local
   Jackson:
     property-naming-strategy: SNAKE_CASE
 
@@ -11,7 +11,7 @@ spring:
     driver-class-name: org.h2.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true

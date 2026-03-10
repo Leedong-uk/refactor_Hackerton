@@ -26,13 +26,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         Member member = memberRepository.findMemberByEmail(email);
-
-        if (member == null)
-            throw new UsernameNotFoundException("유저를 찾을 수 없습니다.");
         List<AuthStatus> findAuthList = authRepository.findStatusesByMemberId(member.getId());
 
-        if (findAuthList.isEmpty())
-            throw new UsernameNotFoundException("권한이 없는 사용자입니다.");
         LoginMemberDto dto = LoginMemberDto.of(member, findAuthList);
 
         return new CustomUser(dto);
