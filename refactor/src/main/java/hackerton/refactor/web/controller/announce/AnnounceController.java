@@ -26,6 +26,7 @@ public class AnnounceController {
         return announceService.getAnnounce(user.getMemberId(),pageable).getContent();
     }
 
+
     @GetMapping("/announce/{announceId}")
     @ApiSuccess(message = "announce.detail")
     public AnnounceDetailResponse getAnnounceDetail(@PathVariable Long announceId) {

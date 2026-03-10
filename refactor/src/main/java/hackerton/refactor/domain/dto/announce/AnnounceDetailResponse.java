@@ -2,7 +2,6 @@ package hackerton.refactor.domain.dto.announce;
 
 import hackerton.refactor.domain.dto.document.DocumentItemDto;
 import hackerton.refactor.domain.entity.announce.Announce;
-import hackerton.refactor.domain.repository.announce.AnnounceRepository;
 import lombok.Builder;
 import lombok.Data;
 
