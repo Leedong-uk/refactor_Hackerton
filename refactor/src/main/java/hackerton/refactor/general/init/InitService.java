@@ -3,13 +3,16 @@ package hackerton.refactor.general.init;
 import hackerton.refactor.domain.entity.Article;
 import hackerton.refactor.domain.entity.announce.Announce;
 import hackerton.refactor.domain.entity.business.BusinessCode;
+import hackerton.refactor.domain.entity.festival.Festival;
 import hackerton.refactor.domain.repository.announce.AnnounceRepository;
 import hackerton.refactor.domain.repository.article.ArticleRepository;
 import hackerton.refactor.domain.repository.business.BusinessCodeRepository;
+import hackerton.refactor.domain.repository.festival.FestivalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Random;
 
@@ -20,6 +23,65 @@ public class InitService {
     private final BusinessCodeRepository businessCodeRepository;
     private final ArticleRepository articleRepository;
     private final AnnounceRepository announceRepository;
+    private final FestivalRepository festivalRepository;
+
+    public void initFestival() {
+        Random random = new Random();
+
+        String[] festivals = {
+                "안동 국제 탈춤 페스티벌",
+                "포항 국제 불빛 축제",
+                "영주 풍기 인삼 축제",
+                "문경 찻사발 축제",
+                "청도 소싸움 축제",
+                "경주 벚꽃 축제",
+                "상주 곶감 축제",
+                "울진 대게 축제",
+                "봉화 은어 축제",
+                "영덕 대게 축제"
+        };
+
+        String[] cities = {
+                "안동시", "포항시", "영주시", "문경시",
+                "청도군", "경주시", "상주시", "울진군",
+                "봉화군", "영덕군"
+        };
+
+        for (int i = 1; i <= 300; i++) {
+
+            Festival festival = new Festival();
+
+            int index = i % festivals.length;
+
+            festival.setTitle(festivals[index]);
+            festival.setFestivalTitle(festivals[index]);
+
+            festival.setAddress("경상북도 " + cities[index]);
+            festival.setDetailAddress(cities[index] + " 축제광장 " + (i % 5 + 1));
+
+            festival.setEventStartDate(LocalDate.now().plusDays(i));
+            festival.setEventEndDate(LocalDate.now().plusDays(i + 3));
+
+            festival.setTel("054-123-" + String.format("%04d", i));
+            festival.setTelName(cities[index] + " 관광과");
+
+            festival.setContentId(10000L + i);
+
+            festival.setFirstImage("https://example.com/festival/image/" + i + ".jpg");
+
+            festival.setOverview(
+                    festivals[index] + "는 경상북도 " + cities[index] + "에서 열리는 대표 지역 축제로, " +
+                            "지역 특산물과 전통 문화를 체험할 수 있는 행사입니다. " +
+                            "다양한 공연과 체험 프로그램, 먹거리 장터가 운영되며 많은 관광객이 방문합니다."
+            );
+
+
+            festival.setMapX(128.0 + random.nextDouble());
+            festival.setMapY(36.0 + random.nextDouble());
+
+            festivalRepository.save(festival);
+        }
+    }
 
     public void initAnnounce() {
         Random random = new Random();

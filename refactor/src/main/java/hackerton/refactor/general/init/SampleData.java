@@ -23,6 +23,7 @@ public class SampleData {
         initService.initBusinessCode();
         initService.initArticle();
         initService.initAnnounce();
+        initService.initFestival();
 
     }
 

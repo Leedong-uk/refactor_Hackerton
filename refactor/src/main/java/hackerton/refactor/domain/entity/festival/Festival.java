@@ -12,7 +12,6 @@ import java.time.LocalDate;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Festival extends BaseEntity {
 
     @Id
@@ -20,6 +19,7 @@ public class Festival extends BaseEntity {
     @Column(name = "festival_id")
     private Long id;
     private String address;
+    private String title;
     private String detailAddress;
     private LocalDate eventStartDate;
     private LocalDate eventEndDate;
@@ -28,11 +28,11 @@ public class Festival extends BaseEntity {
     private String festivalTitle;
     @Lob
     private String overview;
-
     private Long contentId;
     private String telName;
     private double mapX;
     private double mapY;
 
-
+    public Festival() {
+    }
 }
