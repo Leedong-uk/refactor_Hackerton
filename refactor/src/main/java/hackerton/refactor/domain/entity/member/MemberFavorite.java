@@ -10,7 +10,6 @@ import lombok.Setter;
 @Entity
 @Getter @Setter
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"member_id","announce_id"}))
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberFavorite {
     @Id
     @GeneratedValue
@@ -25,4 +24,6 @@ public class MemberFavorite {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    public MemberFavorite() {
+    }
 }
