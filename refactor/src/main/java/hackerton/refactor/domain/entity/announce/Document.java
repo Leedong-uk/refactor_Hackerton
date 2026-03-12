@@ -9,7 +9,6 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Document extends BaseEntity {
     @Id
     @GeneratedValue
@@ -23,5 +22,6 @@ public class Document extends BaseEntity {
     @Lob
     private String description;
 
-
+    public Document() {
+    }
 }

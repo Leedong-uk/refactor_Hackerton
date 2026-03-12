@@ -1,5 +1,6 @@
 package hackerton.refactor.domain.service;
 
+import hackerton.refactor.domain.dto.favorite.FavoriteResponse;
 import hackerton.refactor.domain.entity.announce.Announce;
 import hackerton.refactor.domain.entity.member.Member;
 import hackerton.refactor.domain.entity.member.MemberFavorite;
@@ -11,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+
 
 @Service
 @Slf4j
@@ -38,8 +41,11 @@ public class FavoriteService {
         favoriteRepository.deleteByAnnounceIdAndMemberId(announceId,memberId);
     }
 
-//    public List<FavoriteResponse> getFavorites() {
+//    public List<FavoriteResponse> getFavorites(Pageable pageable) {
+//        Page<MemberFavorite> all = favoriteRepository.findAll(pageable);
 //
+//        // count 쿼리 필요
+//        // checklist 서류 가져오는거 필요
 //    }
 
 }

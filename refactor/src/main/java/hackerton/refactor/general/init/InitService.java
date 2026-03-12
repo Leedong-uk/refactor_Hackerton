@@ -2,9 +2,11 @@ package hackerton.refactor.general.init;
 
 import hackerton.refactor.domain.entity.Article;
 import hackerton.refactor.domain.entity.announce.Announce;
+import hackerton.refactor.domain.entity.announce.Document;
 import hackerton.refactor.domain.entity.business.BusinessCode;
 import hackerton.refactor.domain.entity.festival.Festival;
 import hackerton.refactor.domain.repository.announce.AnnounceRepository;
+import hackerton.refactor.domain.repository.document.DocumentRepository;
 import hackerton.refactor.domain.repository.article.ArticleRepository;
 import hackerton.refactor.domain.repository.business.BusinessCodeRepository;
 import hackerton.refactor.domain.repository.festival.FestivalRepository;
@@ -14,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Random;
+import java.util.*;
 
 @Service
 @Transactional
@@ -24,6 +26,86 @@ public class InitService {
     private final ArticleRepository articleRepository;
     private final AnnounceRepository announceRepository;
     private final FestivalRepository festivalRepository;
+    private final DocumentRepository documentRepository;
+
+    public void initAnnounce() {
+
+        Random random = new Random();
+
+        String[] categories = {"금융지원", "기술개발", "마케팅", "인력지원", "수출상담"};
+        String[] instNames = {"중소벤처기업부", "소상공인시장진흥공단", "서울경제진흥원", "경기신용보증재단"};
+
+        String[] requiredDocs = {
+                "지원신청서 (서식1)",
+                "정보수집 이용 제공 동의서 (서식2)"
+        };
+
+        String[] optionalDocs = {
+                "사업자 등록증 또는 사업자등록증명원(최근1개월이내)",
+                "건강보험자격득실확인서 1부",
+                "건강보험 월별 사업장 가입자별 부과현황",
+                "개인별 건강보험 고지산출내역",
+                "월별 원천징수이행상황 신고서",
+                "본인 통장 사본 1부"
+        };
+
+        for (int i = 1; i <= 300; i++) {
+
+            Announce announce = new Announce();
+
+            announce.setTitle("소상공인 지원사업 모집 공고 #" + i);
+            announce.setAuthor("관리자_" + (i % 5));
+            announce.setExcInsttNm(instNames[i % instNames.length]);
+
+            announce.setDescription("본 공고는 " + (i % 5 + 1) + "차 소상공인 지원 사업으로, " +
+                    "사업 운영에 필요한 자금을 지원하고 경영 컨설팅을 제공합니다.");
+
+            announce.setLcategory(categories[i % categories.length]);
+            announce.setPubDate(LocalDateTime.now().minusDays(i));
+            announce.setTargetName("창업 3년 이내 소상공인");
+            announce.setViewNum(random.nextInt(1000));
+
+            announce.setHowToRegister("온라인 접수 (https://example.com/apply/" + i + ")");
+            announce.setCallCompany("02-1234-" + String.format("%04d", i));
+
+            announce.setReqstStartDate(LocalDateTime.now().minusDays(10));
+            announce.setReqstEndDate(LocalDateTime.now().plusDays(i));
+
+            announce.setPrintFileName("공고문_" + i + ".pdf");
+            announce.setPrintFilePath("/files/announce/pdf/" + i);
+            announce.setFileName("첨부파일_" + i + ".zip");
+            announce.setFilePath("/files/announce/zip/" + i);
+
+            announceRepository.save(announce);
+
+            // 필수 서류
+            for (String docTitle : requiredDocs) {
+
+                Document doc = new Document();
+                doc.setAnnounce(announce);
+                doc.setTitle(docTitle);
+                doc.setDescription(docTitle + " 제출이 필요합니다.");
+
+                documentRepository.save(doc);
+            }
+
+            // 선택 서류 (랜덤 1~4개)
+            int optionalCount = random.nextInt(4) + 1;
+
+            List<String> optionalList = new ArrayList<>(Arrays.asList(optionalDocs));
+            Collections.shuffle(optionalList);
+
+            for (int j = 0; j < optionalCount; j++) {
+
+                Document doc = new Document();
+                doc.setAnnounce(announce);
+                doc.setTitle(optionalList.get(j));
+                doc.setDescription(optionalList.get(j) + " 제출 서류");
+
+                documentRepository.save(doc);
+            }
+        }
+    }
 
     public void initFestival() {
         Random random = new Random();
@@ -80,43 +162,6 @@ public class InitService {
             festival.setMapY(36.0 + random.nextDouble());
 
             festivalRepository.save(festival);
-        }
-    }
-
-    public void initAnnounce() {
-        Random random = new Random();
-        String[] categories = {"금융지원", "기술개발", "마케팅", "인력지원", "수출상담"};
-        String[] instNames = {"중소벤처기업부", "소상공인시장진흥공단", "서울경제진흥원", "경기신용보증재단"};
-
-        for (int i = 1; i <= 300; i++) {
-            Announce announce = new Announce();
-            announce.setTitle("소상공인 지원사업 모집 공고 #" + i);
-            announce.setAuthor("관리자_" + (i % 5));
-            announce.setExcInsttNm(instNames[i % instNames.length]);
-
-            // 본문 내용을 길게 구성
-            announce.setDescription("본 공고는 " + (i % 5 + 1) + "차 소상공인 지원 사업으로, " +
-                    "사업 운영에 필요한 자금을 지원하고 경영 컨설팅을 제공합니다. " +
-                    "지원 대상은 창업 3년 이내의 소상공인이며, 자세한 신청 방법은 공고문을 참조 바랍니다. " +
-                    "여러분의 많은 참여 부탁드립니다. 상세 문의는 고객센터로 연락주세요.");
-
-            announce.setLcategory(categories[i % categories.length]);
-            announce.setPubDate(LocalDateTime.now().minusDays(i));
-            announce.setTargetName("창업 3년 이내 소상공인");
-            announce.setViewNum(random.nextInt(1000));
-            announce.setHowToRegister("온라인 접수 (https://example.com/apply/" + i + ")");
-            announce.setCallCompany("02-1234-" + String.format("%04d", i));
-
-            // 날짜 설정
-            announce.setReqstStartDate(LocalDateTime.now().minusDays(10));
-            announce.setReqstEndDate(LocalDateTime.now().plusDays(i)); // 종료일은 미래로 설정
-
-            announce.setPrintFileName("공고문_" + i + ".pdf");
-            announce.setPrintFilePath("/files/announce/pdf/" + i);
-            announce.setFileName("첨부파일_" + i + ".zip");
-            announce.setFilePath("/files/announce/zip/" + i);
-
-            announceRepository.save(announce);
         }
     }
 

@@ -24,23 +24,9 @@ public class AnnounceService {
         return announceRepository.findAnnounceWithFavorite(memberId, pageable);
     }
 
-//    @Transactional
-//    public AnnounceDetailResponse getAnnounceDetail(Long announceId) {
-//        Announce announce = announceRepository.findAnnounceById(announceId);
-//        announce.setViewNum(announce.getViewNum() + 1);
-//        AnnounceDetailResponse response = AnnounceDetailResponse.of(announce);
-//
-//        List<Document> documentList = documentRepository.findDocumentByAnnounce_Id(announceId);
-//        List<DocumentItemDto> checklist = documentList.stream()
-//                .map(doc -> DocumentItemDto.of(doc)) // Document → DTO 변환 메서드 필요
-//                .toList();
-//
-//        response.setChecklist(checklist);
-//        return response;
-//    }
 
     @Transactional
-    public AnnounceDetailResponse getAnnounceDetail(Long announceId) {
+    public AnnounceDetailResponse getAnnounceDetailAndPlus(Long announceId) {
         // 1. 벌크 연산
         announceRepository.updateViewNum(announceId);
 
@@ -54,4 +40,8 @@ public class AnnounceService {
         response.setChecklist(checkList);
         return response;
     }
+
+
+
+
 }

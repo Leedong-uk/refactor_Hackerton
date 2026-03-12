@@ -30,7 +30,7 @@ public class AnnounceController {
     @GetMapping("/announce/{announceId}")
     @ApiSuccess(message = "announce.detail")
     public AnnounceDetailResponse getAnnounceDetail(@PathVariable Long announceId) {
-        return announceService.getAnnounceDetail(announceId);
+        return announceService.getAnnounceDetailAndPlus(announceId);
     }
 
 }

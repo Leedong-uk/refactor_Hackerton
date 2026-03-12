@@ -1,7 +1,6 @@
-package hackerton.refactor.domain.entity.business;
+package hackerton.refactor.domain.entity.member;
 
 import hackerton.refactor.domain.entity.announce.Document;
-import hackerton.refactor.domain.entity.member.Member;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
