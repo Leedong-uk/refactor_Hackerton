@@ -29,8 +29,8 @@ public class AnnounceController {
 
     @GetMapping("/announce/{announceId}")
     @ApiSuccess(message = "announce.detail")
-    public AnnounceDetailResponse getAnnounceDetail(@PathVariable Long announceId) {
-        return announceService.getAnnounceDetailAndPlus(announceId);
+    public AnnounceDetailResponse getAnnounceDetail(@AuthenticationPrincipal CustomUser user, @PathVariable Long announceId) {
+        return announceService.getAnnounceDetailAndPlus(announceId,user.getMemberId());
     }
 
 }

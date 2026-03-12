@@ -10,6 +10,7 @@ public interface AnnounceQueryRepository {
 
     Long updateViewNum(Long announceId);
 
-    Announce findAnnounceWithDocuments(Long announceId);
+//    Announce findAnnounceWithDocuments(Long announceId);
+
 
 }

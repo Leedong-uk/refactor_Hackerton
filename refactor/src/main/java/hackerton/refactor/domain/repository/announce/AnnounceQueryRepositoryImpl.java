@@ -59,14 +59,14 @@ public class AnnounceQueryRepositoryImpl implements AnnounceQueryRepository{
                 .execute();
     }
 
-    @Override
-    public Announce findAnnounceWithDocuments(Long announceId) {
-        return queryFactory
-                .selectFrom(announce)
-                .leftJoin(announce.documents, document).fetchJoin()
-                .where(announce.id.eq(announceId))
-                .fetchOne();
-    }
+//    @Override
+//    public Announce findAnnounceWithDocuments(Long announceId) {
+//        return queryFactory
+//                .selectFrom(announce)
+//                .leftJoin(announce.documents, document).fetchJoin()
+//                .where(announce.id.eq(announceId))
+//                .fetchOne();
+//    }
 
 
 }

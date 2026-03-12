@@ -5,6 +5,7 @@ import hackerton.refactor.domain.dto.announce.AnnounceResponse;
 import hackerton.refactor.domain.dto.document.DocumentItemDto;
 import hackerton.refactor.domain.entity.announce.Announce;
 import hackerton.refactor.domain.repository.announce.AnnounceRepository;
+import hackerton.refactor.domain.repository.favorite.FavoriteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class AnnounceService {
     private final AnnounceRepository announceRepository;
+    private final FavoriteRepository favoriteRepository;
 
     public Slice<AnnounceResponse> getAnnounce(Long memberId ,Pageable pageable) {
         return announceRepository.findAnnounceWithFavorite(memberId, pageable);
@@ -26,18 +28,20 @@ public class AnnounceService {
 
 
     @Transactional
-    public AnnounceDetailResponse getAnnounceDetailAndPlus(Long announceId) {
-        // 1. 벌크 연산
+    public AnnounceDetailResponse getAnnounceDetailAndPlus(Long announceId,Long memberId) {
+        // 1. 조회수 증가
         announceRepository.updateViewNum(announceId);
 
-        Announce announce = announceRepository.findAnnounceWithDocuments(announceId);
-        List<DocumentItemDto> checkList = announce.getDocuments().stream()
-                .map(d -> DocumentItemDto.of(d))
-                .collect(Collectors.toList());
+        //2. 공고 조회
+        Announce announce = announceRepository.findAnnounceById(announceId);
 
+        //3. 체크리스트 조회
+        List<DocumentItemDto> checkList = favoriteRepository.findCheckListWithChecked(announceId, memberId);
 
+        //4. dto 생성
         AnnounceDetailResponse response = AnnounceDetailResponse.of(announce);
         response.setChecklist(checkList);
+
         return response;
     }
 
