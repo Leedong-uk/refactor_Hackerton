@@ -1,18 +1,22 @@
 package hackerton.refactor.domain.service;
 
+
 import hackerton.refactor.domain.dto.favorite.FavoriteResponse;
 import hackerton.refactor.domain.entity.announce.Announce;
 import hackerton.refactor.domain.entity.member.Member;
 import hackerton.refactor.domain.entity.member.MemberFavorite;
 import hackerton.refactor.domain.repository.announce.AnnounceRepository;
 import hackerton.refactor.domain.repository.favorite.FavoriteRepository;
-import hackerton.refactor.domain.repository.festival.FestivalRepository;
+
 import hackerton.refactor.domain.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 
 
 @Service
@@ -41,11 +45,9 @@ public class FavoriteService {
         favoriteRepository.deleteByAnnounceIdAndMemberId(announceId,memberId);
     }
 
-//    public List<FavoriteResponse> getFavorites(Pageable pageable) {
-//        Page<MemberFavorite> all = favoriteRepository.findAll(pageable);
-//
-//        // count 쿼리 필요
-//        // checklist 서류 가져오는거 필요
-//    }
+    public List<FavoriteResponse> getFavorites(Long memberId,Pageable pageable) {
+        Slice<FavoriteResponse> favoritesByMemberId = favoriteRepository.findFavoritesByMemberId(memberId, pageable);
+        return favoritesByMemberId.getContent();
+    }
 
 }
