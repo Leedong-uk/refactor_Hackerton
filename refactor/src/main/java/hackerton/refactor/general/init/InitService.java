@@ -2,7 +2,7 @@ package hackerton.refactor.general.init;
 
 import hackerton.refactor.domain.entity.Article;
 import hackerton.refactor.domain.entity.announce.Announce;
-import hackerton.refactor.domain.entity.announce.Document;
+import hackerton.refactor.domain.entity.document.Document;
 import hackerton.refactor.domain.entity.business.BusinessCode;
 import hackerton.refactor.domain.entity.festival.Festival;
 import hackerton.refactor.domain.repository.announce.AnnounceRepository;

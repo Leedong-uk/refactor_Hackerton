@@ -1,6 +1,6 @@
-package hackerton.refactor.domain.entity.member;
+package hackerton.refactor.domain.entity.document;
 
-import hackerton.refactor.domain.entity.announce.Document;
+import hackerton.refactor.domain.entity.member.Member;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"member_id","document_id"}))
 public class MemberDocumentCheck {
     @Id
@@ -27,6 +26,8 @@ public class MemberDocumentCheck {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private LocalDateTime checkedAt;
+    private boolean checked;
 
+    public MemberDocumentCheck() {
+    }
 }

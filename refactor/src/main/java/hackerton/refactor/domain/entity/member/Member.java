@@ -13,6 +13,7 @@ public class Member extends BaseEntity {
     @GeneratedValue
     @Column(name = "member_id")
     private Long id;
+    @Column(unique = true)
     private String email;
     private String password;
     private String name;

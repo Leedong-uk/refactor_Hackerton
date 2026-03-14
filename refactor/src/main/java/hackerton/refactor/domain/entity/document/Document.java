@@ -1,10 +1,9 @@
-package hackerton.refactor.domain.entity.announce;
+package hackerton.refactor.domain.entity.document;
 
+import hackerton.refactor.domain.entity.announce.Announce;
 import hackerton.refactor.domain.entity.base.BaseEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity

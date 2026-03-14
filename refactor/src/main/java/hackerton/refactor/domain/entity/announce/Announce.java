@@ -1,10 +1,9 @@
 package hackerton.refactor.domain.entity.announce;
 
 import hackerton.refactor.domain.entity.base.BaseEntity;
+import hackerton.refactor.domain.entity.document.Document;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;

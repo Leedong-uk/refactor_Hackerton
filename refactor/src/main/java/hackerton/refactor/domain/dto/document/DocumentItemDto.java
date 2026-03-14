@@ -1,6 +1,6 @@
 package hackerton.refactor.domain.dto.document;
 
-import hackerton.refactor.domain.entity.announce.Document;
+import hackerton.refactor.domain.entity.document.Document;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

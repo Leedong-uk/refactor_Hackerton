@@ -4,7 +4,6 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import hackerton.refactor.domain.dto.announce.AnnounceResponse;
-import hackerton.refactor.domain.entity.announce.Announce;
 
 import hackerton.refactor.domain.entity.announce.QAnnounce;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,7 @@ import org.springframework.data.domain.SliceImpl;
 import java.util.List;
 
 import static hackerton.refactor.domain.entity.announce.QAnnounce.announce;
-import static hackerton.refactor.domain.entity.announce.QDocument.document;
+
 import static hackerton.refactor.domain.entity.member.QMemberFavorite.memberFavorite;
 
 
