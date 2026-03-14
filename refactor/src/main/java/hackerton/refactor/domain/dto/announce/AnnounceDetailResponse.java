@@ -1,6 +1,6 @@
 package hackerton.refactor.domain.dto.announce;
 
-import hackerton.refactor.domain.dto.document.DocumentItemDto;
+import hackerton.refactor.domain.dto.document.DocumentCheckItemDto;
 import hackerton.refactor.domain.entity.announce.Announce;
 import lombok.Builder;
 import lombok.Data;
@@ -27,7 +27,7 @@ public class AnnounceDetailResponse {
     private String callCompany;
     private String printFilePathName;
     private String printFileName;
-    private List<DocumentItemDto> checklist;
+    private List<DocumentCheckItemDto> checklist;
 
     public static AnnounceDetailResponse of(Announce announce) {
         return AnnounceDetailResponse.builder()
