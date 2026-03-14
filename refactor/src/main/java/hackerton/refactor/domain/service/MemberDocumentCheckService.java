@@ -33,51 +33,30 @@ public class MemberDocumentCheckService {
     }
 
     @Transactional
-    public void saveChecklist(Long memberId, List<DocumentInsertRequest> requests) {
-        log.info("memberId = {}", memberId);
-        requests.forEach(r -> log.info("docId = {}", r.getDocumentId()));
+    public void saveChecklist(Long memberId, Long announceId, List<DocumentInsertRequest> requests) {
 
-        if(requests == null || requests.isEmpty())
-            throw new ServerErrorException(BadStatusCode.INTERNAL_SERVER_EXCEPTION);
+        if (requests == null || requests.isEmpty()) return;
 
-        List<Long> docIds =requests.stream()
-                .map(DocumentInsertRequest::getDocumentId)
-                .toList();
+        //  기존 전체 삭제 (쿼리 1번)
+        memberDocumentCheckRepository.deleteChecklist(memberId, announceId);
 
-        //  (쿼리 1번)
-        List<MemberDocumentCheck> existing = memberDocumentCheckRepository.findAllByMemberIdAndDocumentIdIn(memberId, docIds);
+        Member memberProxy = em.getReference(Member.class, memberId);
+        List<MemberDocumentCheck> inserts = new ArrayList<>();
 
-        Map<Long, MemberDocumentCheck> map = existing.stream()
-                .collect(Collectors.toMap(c ->
-                                c.getDocument().getId(),
-                        c -> c));
+        for (DocumentInsertRequest req : requests) {
+            // checked = true 인 것만 저장
+            if (!req.isChecked()) continue;
 
-        List<MemberDocumentCheck> toInsert = new ArrayList<>();
-        for (DocumentInsertRequest request : requests) {
+            MemberDocumentCheck check = new MemberDocumentCheck();
+            check.setMember(memberProxy);
+            check.setDocument(em.getReference(Document.class, req.getDocumentId()));
+            check.setChecked(true);
 
-            Long documentId = request.getDocumentId();
-            MemberDocumentCheck existingCheck = map.get(documentId);
-
-            //  존재하지 않는 경우 → INSERT 대상
-            if (existingCheck == null) {
-
-                // 새로운 엔티티 생성
-                MemberDocumentCheck newCheck = new MemberDocumentCheck();
-                Member memberProxy = em.getReference(Member.class, memberId);
-                Document documentProxy = em.getReference(Document.class, documentId);
-                newCheck.setMember(memberProxy);
-                newCheck.setDocument(documentProxy);
-                newCheck.setChecked(request.isChecked());
-
-                // 나중에 한번에 saveAll 하기 위해 리스트에 담음
-                toInsert.add(newCheck);
-
-            }
-            else {
-                existingCheck.setChecked(request.isChecked());
-            }
+            inserts.add(check);
         }
-        log.info("toInsert size = {}", toInsert.size());
-        memberDocumentCheckRepository.saveAll(toInsert);
+
+        if (!inserts.isEmpty()) {
+            memberDocumentCheckRepository.saveAll(inserts);
+        }
     }
 }

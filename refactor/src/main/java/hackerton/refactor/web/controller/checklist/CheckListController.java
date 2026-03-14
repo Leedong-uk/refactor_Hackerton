@@ -6,10 +6,7 @@ import hackerton.refactor.domain.service.MemberDocumentCheckService;
 import hackerton.refactor.general.security.userdetail.CustomUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,9 +18,11 @@ public class CheckListController {
     private final AnnounceService announceService;
     private final MemberDocumentCheckService memberDocumentCheckService;
 
-    @PostMapping
-    public void addFavorite(@AuthenticationPrincipal CustomUser user, @RequestBody List<DocumentInsertRequest> requests) {
-        memberDocumentCheckService.saveChecklist(user.getMemberId(),requests);
+    @PostMapping("/{announceId}")
+    public void addFavorite(@AuthenticationPrincipal CustomUser user,
+                            @PathVariable Long announceId,
+                            @RequestBody List<DocumentInsertRequest> requests) {
+        memberDocumentCheckService.saveChecklist(user.getMemberId(),announceId,requests);
     }
 
 

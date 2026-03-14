@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface MemberDocumentQueryRepository {
     List<DocumentCheckItemDto> findChecklist(Long memberId, Long announceId);
+    void deleteChecklist(Long memberId, Long announceId);
 }

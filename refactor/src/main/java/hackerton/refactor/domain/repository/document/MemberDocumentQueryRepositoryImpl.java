@@ -1,6 +1,7 @@
 package hackerton.refactor.domain.repository.document;
 
 import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import hackerton.refactor.domain.dto.document.DocumentCheckItemDto;
 import lombok.RequiredArgsConstructor;
@@ -27,4 +28,16 @@ public class MemberDocumentQueryRepositoryImpl implements MemberDocumentQueryRep
                 .fetch();
 
     }
+
+    @Override
+    public void deleteChecklist(Long memberId, Long announceId) {
+        queryFactory
+                .delete(memberDocumentCheck)
+                .where(
+                        memberDocumentCheck.member.id.eq(memberId),
+                        memberDocumentCheck.document.announce.id.eq(announceId)
+                )
+                .execute();
+    }
+
 }
