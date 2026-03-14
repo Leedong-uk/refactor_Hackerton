@@ -24,6 +24,7 @@ public class SampleData {
         initService.initArticle();
         initService.initAnnounce();
         initService.initFestival();
+        initService.initNotice();
 
     }
 

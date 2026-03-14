@@ -9,7 +9,6 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Notice extends BaseEntity {
     @Id
     @GeneratedValue
@@ -23,5 +22,6 @@ public class Notice extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private NoticeStatus status;
 
-
+    public Notice() {
+    }
 }

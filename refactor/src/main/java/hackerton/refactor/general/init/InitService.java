@@ -5,11 +5,14 @@ import hackerton.refactor.domain.entity.announce.Announce;
 import hackerton.refactor.domain.entity.document.Document;
 import hackerton.refactor.domain.entity.business.BusinessCode;
 import hackerton.refactor.domain.entity.festival.Festival;
+import hackerton.refactor.domain.entity.notice.Notice;
+import hackerton.refactor.domain.entity.notice.NoticeStatus;
 import hackerton.refactor.domain.repository.announce.AnnounceRepository;
 import hackerton.refactor.domain.repository.document.DocumentRepository;
 import hackerton.refactor.domain.repository.article.ArticleRepository;
 import hackerton.refactor.domain.repository.business.BusinessCodeRepository;
 import hackerton.refactor.domain.repository.festival.FestivalRepository;
+import hackerton.refactor.domain.repository.notice.NoticeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +30,29 @@ public class InitService {
     private final AnnounceRepository announceRepository;
     private final FestivalRepository festivalRepository;
     private final DocumentRepository documentRepository;
+    private final NoticeRepository noticeRepository;
+
+
+    public void initNotice() {
+        String[] titles = {"시스템 점검 안내", "신규 소상공인 지원사업 공고", "개인정보 처리방침 변경", "서비스 이용약관 개정", "고객센터 운영시간 변경"};
+
+        for (int i = 1; i <= 50; i++) {
+            Notice notice = new Notice();
+
+            // 1. 제목 및 내용 설정
+            notice.setTitle(titles[i % titles.length] + " (" + i + "차)");
+            notice.setContent("안녕하세요. 소상공인 지원 플랫폼입니다. " + i + "번째 공지사항 내용을 확인해 주세요.");
+
+            // 2. 상태값 분배 (PUBLISHED 80%, HIDDEN 20%)
+            if (i % 5 == 0) {
+                notice.setStatus(NoticeStatus.HIDDEN);
+            } else {
+                notice.setStatus(NoticeStatus.PUBLISHED);
+            }
+
+            noticeRepository.save(notice);
+        }
+    }
 
     public void initAnnounce() {
 

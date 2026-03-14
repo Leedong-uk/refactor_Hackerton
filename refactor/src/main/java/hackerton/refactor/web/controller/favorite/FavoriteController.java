@@ -42,7 +42,7 @@ public class FavoriteController {
 
     //favorite list 가져오기
     @GetMapping("/favorite")
-    @ApiSuccess()
+    @ApiSuccess(message = "favorite.list")
     public List<FavoriteResponse> getFavorites(@AuthenticationPrincipal CustomUser user , Pageable pageable) {
         return favoriteService.getFavorites(user.getMemberId(), pageable);
     }
