@@ -1,18 +1,15 @@
 package hackerton.refactor.domain.entity.sos;
 
+import hackerton.refactor.domain.dto.SosCreateRequest;
 import hackerton.refactor.domain.entity.base.BaseEntity;
 import hackerton.refactor.domain.entity.member.Member;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Sos extends BaseEntity {
     @Id
     @GeneratedValue
@@ -36,4 +33,17 @@ public class Sos extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private SosStatus status = SosStatus.ACTIVE;
+
+    public Sos() {
+    }
+
+    // 생성 메서드 //
+    public static Sos of (SosCreateRequest request) {
+        Sos sos = new Sos();
+        sos.setTitle(request.getTitle());
+        sos.setType(request.getType());
+        sos.setContent(request.getContent());
+        sos.setExpiredAt(request.getExpiredAt());
+        return sos;
+    }
 }
