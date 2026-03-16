@@ -1,6 +1,6 @@
 package hackerton.refactor.domain.entity.sos;
 
-import hackerton.refactor.domain.dto.SosCreateRequest;
+import hackerton.refactor.domain.dto.sos.SosCreateRequest;
 import hackerton.refactor.domain.entity.base.BaseEntity;
 import hackerton.refactor.domain.entity.member.Member;
 import jakarta.persistence.*;
@@ -36,11 +36,12 @@ public class Sos extends BaseEntity {
     @Column(nullable = false)
     private SosStatus status = SosStatus.ACTIVE;
 
-    @OneToMany(mappedBy = "sos", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "sos", cascade = CascadeType.ALL,fetch = FetchType.LAZY,orphanRemoval = true)
     private List<SosImage> images = new ArrayList<>();
 
     public Sos() {
     }
+
 
     // 생성 메서드 //
     public static Sos of (SosCreateRequest request) {
@@ -56,5 +57,16 @@ public class Sos extends BaseEntity {
     public void addImage(SosImage image) {
         images.add(image);
         image.setSos(this);
+    }
+
+    public void updateInfo(String title,
+                           SosType type,
+                           String content,
+                           LocalDateTime expiredAt) {
+
+        this.title = title;
+        this.type = type;
+        this.content = content;
+        this.expiredAt = expiredAt;
     }
 }

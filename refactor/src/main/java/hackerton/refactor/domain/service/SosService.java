@@ -1,11 +1,11 @@
 package hackerton.refactor.domain.service;
 
-import hackerton.refactor.domain.dto.SosCreateRequest;
+import hackerton.refactor.domain.dto.sos.SosCreateRequest;
+import hackerton.refactor.domain.dto.sos.SosUpdateRequest;
 import hackerton.refactor.domain.entity.member.Member;
 import hackerton.refactor.domain.entity.sos.Sos;
 import hackerton.refactor.domain.entity.sos.SosImage;
 import hackerton.refactor.domain.repository.member.MemberRepository;
-import hackerton.refactor.domain.repository.sos.SosImageRepository;
 import hackerton.refactor.domain.repository.sos.SosRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,5 +34,25 @@ public class SosService {
             sos.addImage(image);
         }
         sosRepository.save(sos);
+    }
+
+    @Transactional
+    public void updateSos(Long memberId, Long sosId, SosUpdateRequest request) {
+        Sos sos = sosRepository.findById(sosId)
+                .orElseThrow(() -> new RuntimeException("SOS 없음"));
+
+        if (!sos.getMember().getId().equals(memberId)) {
+            throw new RuntimeException("수정 권한 없음");
+        }
+
+        sos.updateInfo(request.getTitle(),request.getType(),request.getContent(),request.getExpiredAt());
+
+        sos.getImages().clear();
+
+        for (int i = 0; i < request.getImages().size(); i++) {
+            SosImage image = new SosImage(request.getImages().get(i));
+            image.setSortOrder(i);
+            sos.addImage(image);
+        }
     }
 }

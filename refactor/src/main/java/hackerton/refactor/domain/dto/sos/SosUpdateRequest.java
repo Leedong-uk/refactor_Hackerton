@@ -1,5 +1,4 @@
-package hackerton.refactor.domain.dto;
-
+package hackerton.refactor.domain.dto.sos;
 
 import hackerton.refactor.domain.entity.sos.SosType;
 import lombok.AllArgsConstructor;
@@ -10,13 +9,10 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class SosCreateRequest {
+public class SosUpdateRequest {
     private String title;
     private SosType type;
     private String content;
     private LocalDateTime expiredAt;
     private List<String> images;
-
 }
-
-
