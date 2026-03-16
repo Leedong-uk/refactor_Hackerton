@@ -28,4 +28,12 @@ public class SosController {
                           @RequestBody SosUpdateRequest request) {
         sosService.updateSos(user.getMemberId(),sosId,request);
     }
+
+    @DeleteMapping("/sos/{sosId}")
+    @ApiSuccess(message = "sos.delete")
+    public void deleteSos(@AuthenticationPrincipal CustomUser user ,
+                          @PathVariable Long sosId) {
+        sosService.deleteSos(user.getMemberId(),sosId);
+    }
+
 }

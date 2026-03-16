@@ -6,7 +6,9 @@ import hackerton.refactor.domain.entity.member.Member;
 import hackerton.refactor.domain.entity.sos.Sos;
 import hackerton.refactor.domain.entity.sos.SosImage;
 import hackerton.refactor.domain.repository.member.MemberRepository;
+import hackerton.refactor.domain.repository.sos.SosImageRepository;
 import hackerton.refactor.domain.repository.sos.SosRepository;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,8 @@ public class SosService {
 
     private final SosRepository sosRepository;
     private final MemberRepository memberRepository;
+    private final SosImageRepository sosImageRepository;
+
 
     @Transactional
     public void createSos(Long memberId , SosCreateRequest request) {
@@ -45,8 +49,8 @@ public class SosService {
             throw new RuntimeException("수정 권한 없음");
         }
 
-        sos.updateInfo(request.getTitle(),request.getType(),request.getContent(),request.getExpiredAt());
-
+        sos.updateInfo(request.getTitle(), request.getType(), request.getContent(), request.getExpiredAt());
+        sosImageRepository.deleteSosBulk(sosId);
         sos.getImages().clear();
 
         for (int i = 0; i < request.getImages().size(); i++) {
@@ -54,5 +58,19 @@ public class SosService {
             image.setSortOrder(i);
             sos.addImage(image);
         }
+    }
+
+
+    @Transactional
+    public void deleteSos(Long memberId , Long sosId) {
+        Sos sos = sosRepository.findById(sosId)
+                .orElseThrow();
+
+        if (!sos.getMember().getId().equals(memberId)) {
+            throw new RuntimeException("삭제 권한 없음");
+        }
+
+        sosImageRepository.deleteAllBySosId(sosId);
+        sosImageRepository.deleteSosBulk(sosId);
     }
 }
