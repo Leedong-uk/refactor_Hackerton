@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -34,6 +36,9 @@ public class Sos extends BaseEntity {
     @Column(nullable = false)
     private SosStatus status = SosStatus.ACTIVE;
 
+    @OneToMany(mappedBy = "sos", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<SosImage> images = new ArrayList<>();
+
     public Sos() {
     }
 
@@ -45,5 +50,11 @@ public class Sos extends BaseEntity {
         sos.setContent(request.getContent());
         sos.setExpiredAt(request.getExpiredAt());
         return sos;
+    }
+
+    //편의 메서드 //
+    public void addImage(SosImage image) {
+        images.add(image);
+        image.setSos(this);
     }
 }

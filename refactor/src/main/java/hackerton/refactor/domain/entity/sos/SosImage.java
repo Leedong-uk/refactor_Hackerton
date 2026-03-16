@@ -9,7 +9,6 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SosImage extends BaseEntity {
     @Id
     @GeneratedValue
@@ -24,4 +23,11 @@ public class SosImage extends BaseEntity {
     private String storageKey;
 
     private int sortOrder;
+
+    public SosImage() {
+    }
+
+    public SosImage(String storageKey) {
+        this.storageKey = storageKey;
+    }
 }

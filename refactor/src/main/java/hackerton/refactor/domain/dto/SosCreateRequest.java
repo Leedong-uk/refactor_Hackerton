@@ -16,4 +16,7 @@ public class SosCreateRequest {
     private String content;
     private LocalDateTime expiredAt;
     private List<String> images;
+
 }
+
+
