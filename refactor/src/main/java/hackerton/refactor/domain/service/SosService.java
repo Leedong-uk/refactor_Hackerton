@@ -1,6 +1,8 @@
 package hackerton.refactor.domain.service;
 
 import hackerton.refactor.domain.dto.sos.SosCreateRequest;
+import hackerton.refactor.domain.dto.sos.SosDetailResponse;
+import hackerton.refactor.domain.dto.sos.SosListResponse;
 import hackerton.refactor.domain.dto.sos.SosUpdateRequest;
 import hackerton.refactor.domain.entity.member.Member;
 import hackerton.refactor.domain.entity.sos.Sos;
@@ -13,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -72,5 +76,13 @@ public class SosService {
 
         sosImageRepository.deleteAllBySosId(sosId);
         sosImageRepository.deleteSosBulk(sosId);
+    }
+
+    public List<SosListResponse> getSosList() {
+        return sosRepository.getAllSos();
+    }
+
+    public SosDetailResponse getSosDetail(Long sosId) {
+        return sosRepository.getSosDetail(sosId);
     }
 }

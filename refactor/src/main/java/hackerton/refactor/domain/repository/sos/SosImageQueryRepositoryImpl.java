@@ -1,9 +1,8 @@
 package hackerton.refactor.domain.repository.sos;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import hackerton.refactor.domain.entity.sos.QSos;
-import lombok.RequiredArgsConstructor;
 
+import lombok.RequiredArgsConstructor;
 import static hackerton.refactor.domain.entity.sos.QSos.sos;
 import static hackerton.refactor.domain.entity.sos.QSosImage.sosImage;
 
@@ -27,4 +26,6 @@ public class SosImageQueryRepositoryImpl implements SosImageQueryRepository{
                 .where(sos.id.eq(sosId))
                 .execute();
     }
+
+
 }
