@@ -76,7 +76,8 @@
             CRAW_IO_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "크롤링 IO 오류"),
             CRAWL_FAIL_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "공고 크롤링 실패"),
 
-            ANNOUNCE_DETAIL_GET_FAIL(HttpStatus.NOT_FOUND,"상세 공고 불러오기 실패");
+            ANNOUNCE_DETAIL_GET_FAIL(HttpStatus.NOT_FOUND,"상세 공고 불러오기 실패"),
+            MAIL_QUEUE_FULL_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR,"세마포어 큐가 가득 찼습니다");
 
 
 
