@@ -1,11 +1,11 @@
 package hackerton.refactor.domain.service;
 
+import hackerton.refactor.domain.dto.email.MailRequest;
 import hackerton.refactor.general.enums.BadStatusCode;
-import hackerton.refactor.general.exception.ServerErrorException;
+import hackerton.refactor.general.exception.CustomException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -25,15 +25,15 @@ public class EmailService {
     private final Semaphore emailSemaphore = new Semaphore(20);
 
     @Async("emailAsyncExecutor")
-    public void sendEmail(String email) {
-
+    public void sendEmail(MailRequest request) {
+        String email = request.getEmail();
         boolean acquired = false;
 
         try {
             acquired = emailSemaphore.tryAcquire(3, TimeUnit.SECONDS);
 
             if (!acquired) {
-                throw new ServerErrorException(
+                throw new CustomException(
                         BadStatusCode.MAIL_QUEUE_FULL_EXCEPTION
                 );
             }
@@ -53,7 +53,7 @@ public class EmailService {
             context.setVariable("code", verificationCode);
 
             String htmlContent =
-                    templateEngine.process("email/verification", context);
+                    templateEngine.process("verification", context);
 
             helper.setText(htmlContent, true);
 
@@ -61,7 +61,7 @@ public class EmailService {
 
 
         } catch (Exception e) {
-            throw new ServerErrorException(
+            throw new CustomException(
                     BadStatusCode.FAIL_TO_SEND_MAIL_EXCEPTION
             );
 

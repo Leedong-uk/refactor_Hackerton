@@ -18,19 +18,20 @@ spring:
           batch_size: 50
         format_sql: true
         default_batch_fetch_size: 100
-mail:
-  host: smtp.naver.com
-  port: 465
-  username: zibi_official@naver.com
-  password: U85DKZXRU792
-  default-encoding: UTF-8
+  mail:
+    host: smtp.naver.com
+    port: 465
+    username: zibi_official@naver.com
+    password: QQHD1C3DVF6E
+    default-encoding: UTF-8
 
-  properties:
-    mail:
-      smtp:
-        auth: true
-        ssl:
-          enable: true
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+
 logging:
   level:
     org.hibernate.SQL: debug
