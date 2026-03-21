@@ -6,6 +6,7 @@ import hackerton.refactor.general.exception.CustomException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import java.time.Duration;
 import java.util.UUID;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
@@ -23,6 +25,7 @@ public class EmailService {
     private final JavaMailSender javaMailSender;
     private final TemplateEngine templateEngine;
     private final Semaphore emailSemaphore = new Semaphore(20);
+    private final StringRedisTemplate stringRedisTemplate;
 
     @Async("emailAsyncExecutor")
     public void sendEmail(MailRequest request) {
@@ -56,7 +59,8 @@ public class EmailService {
                     templateEngine.process("verification", context);
 
             helper.setText(htmlContent, true);
-
+            String emailKey = "email:verification:"+email;
+            stringRedisTemplate.opsForValue().set(emailKey,verificationCode, Duration.ofMinutes(5));
             javaMailSender.send(message);
 
 

@@ -57,6 +57,9 @@ dependencies {
 
 	//타임 리프
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+	//레디스
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 // Querydsl 설정부

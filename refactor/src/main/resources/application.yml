@@ -9,6 +9,7 @@ spring:
     username: sa
     password:
     driver-class-name: org.h2.Driver
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -18,19 +19,25 @@ spring:
           batch_size: 50
         format_sql: true
         default_batch_fetch_size: 100
+
   mail:
     host: smtp.naver.com
     port: 465
     username: zibi_official@naver.com
     password: QQHD1C3DVF6E
     default-encoding: UTF-8
-
     properties:
       mail:
         smtp:
           auth: true
           ssl:
             enable: true
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
 
 logging:
   level:
